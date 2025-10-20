@@ -17,15 +17,16 @@ import colour.colour;
 public class Quoridor extends Games<QuoridorPlayer>{
     Scanner inp = new Scanner(System.in);
     QuoridorBoard board = new QuoridorBoard();
+    colour c = new colour();
 
     public Quoridor(int numPlayers)
     {
         super(numPlayers); //To initialize the Quoridor players
+        board.setSize("9x9"); //Setting the size of the board to 9x9
     }
 
     /**
-     * Assigning a colour to each player in the game.
-     * @param No parameters
+     * Assigning a colour to each player in the games
      * @return void function
      */
     public void assignColour()
@@ -41,7 +42,6 @@ public class Quoridor extends Games<QuoridorPlayer>{
 
     /**
      * The starting point of the game
-     * @param No parameters
      * @return void function
      */
     @Override
@@ -53,7 +53,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
         boolean valid = false;
         boolean checkInput = false;
 
-        //setPlayerCount(2);
+        setPlayerCount(players.size());
         setPlayerName();
         setFencesforPlayer();
         assignColour();
@@ -61,20 +61,59 @@ public class Quoridor extends Games<QuoridorPlayer>{
 
         do{
             System.out.println();
-            board.setSize("9x9");
             checkInput = board.setDimensions(board.getSize()); //to get the rows and columns from the inputting size of the board
             //checkInput = false;
             board.dotsBoard = new BoxTile[board.getRows()][board.getCols()]; //initializing the board for the game with the size
             board.initializeBoard();
+            setPlayerPosition();
+
             System.out.println();
+
             board.printBoardState();
             while (isGameDone == false) //If the game has slots with no boxes claimed, the game must continue
             {
                 for(QuoridorPlayer player: players) //iterating through the list of players
                 {
-    
+                    player.move();
+                    switch(player.choice)
+                    {
+                        case 1:
+                            board.legalMoves();
+                            while(checkInput == false)
+                            {
+                                System.out.print("Enter your move: ");
+                                inp = nextInt();
+                                if(board.legalMovesList.contains(inp))
+                                {
+                                    board.makeMove(player, inp);
+                                    checkInput == true;
+                                }
+                                else{
+                                    error.invalidMove();
+                                }
+                            }
+                            break;
+                        case 2:
+                            while(checkInput == false)
+                            {
+                                System.out.print("Enter the tile numbers and the direction of the wall you want to place: ");
+                                inp = nextLine();
+                                if(setFence(inp))
+                                {
+                                    System.out.println("Fence placed!");
+                                    checkInput == true;
+                                }
+                                else{
+                                    error.invalidMove();
+                                }
+                            }
+                            break;
+                        default:
+                            player.invalidMove();
+                            break;
+                    }
+                    board.printBoardState();
                 }
-
             }
             System.out.println("Do you want to play another round? (Y/N)");
             ch = inp.next().charAt(0);
@@ -86,14 +125,14 @@ public class Quoridor extends Games<QuoridorPlayer>{
     {
         for(QuoridorPlayer player : players)
         {
+            player.playerPiece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour)
             player.setPlayerFences(players.size());
-            System.out.println(player.getName()+":"+player.getFences());        
+            System.out.println(player.getName()+":"+player.getFences());
         }
     }
 
     /**
      * Initializing the players for the dots and boxes game
-     * @param number of players for the game
      * @return void function
      */
     @Override
@@ -102,11 +141,36 @@ public class Quoridor extends Games<QuoridorPlayer>{
         int i = 0;
         while(i < n)
         {
-          players.add(new QuoridorPlayer());
-          i++;
+            players.add(new QuoridorPlayer());
+            i++;
         }
     }
-    
+
+    public void setPlayerPosition()
+    {
+        int i = 0;
+        for(QuoridorPlayer player : players)
+        {
+            player.playerPiece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour)
+            switch(i)
+            {
+                case 0:
+                    playerPosition = new Tile(0, ((board.getCols() - 1)/2));
+                    break;
+                case 1:
+                    playerPosition = new Tile(board.getRows()-1, ((board.getCols() - 1)/2));
+                    break;
+                case 2:
+                    playerPosition = new Tile(((board.getRows() - 1)/2), 0);
+                    break;
+                case 3:
+                    playerPosition = new Tile(((board.getRows() - 1)/2), (board.getCols() - 1));
+                    break;
+            }
+            i++;
+        }
+    }
+
     /**
      * Checking if the game is done
      * @param No parameters
@@ -117,12 +181,12 @@ public class Quoridor extends Games<QuoridorPlayer>{
     //     int maxNum = 0;
     //     int i = 0;
     //     int a = 0;
-        
+
     //     // if (board.getTotalBoxes() == (board.getRows()*board.getCols())) //if the total number of boxes is equal to the size of the board (n*m)
     //     // {
     //     // for(DotsAndBoxesPlayer player: players)
     //     // {
-           
+
 
     //     // }
     //     // if(a == 0)
@@ -166,14 +230,13 @@ public class Quoridor extends Games<QuoridorPlayer>{
 
     /**
      * To display the instructions on how to play the game to the users
-     * @param No parameters
      * @return void function
      */
     @Override
     public void displayInstructions()
     {
         System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-        System.out.println("\033[1;31;47m              DOTS AND BOXES            \033[0m");
+        System.out.println("\033[1;31;47m              QUORIDOR            \033[0m");
         System.out.println("\u001B[31m------------------------------------------\u001B[0m");
         System.out.println();
         System.out.println("GOAL: Complete more boxes than your opponent by drawing lines between dots. Each box completed with the 4th edge earns you one point!");
@@ -182,7 +245,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
         System.out.println("1. The board is labeled with letters for rows and columns (A, B, C, ...). For example, the coordinates of the first tile in the board is AA.");
         //board.printExampleBoard(); //to print an example of how the dots and board board is
         System.out.println();
-        System.out.println("Each tile in the board has four different directions - UP (U), DOWN (D), LEFT (L) and RIGHT (R)");   
+        System.out.println("Each tile in the board has four different directions - UP (U), DOWN (D), LEFT (L) and RIGHT (R)");
         System.out.println("2. To mark an edge of each tile, type the coordinates of the box and the direction in which you want to draw the line.");
         System.out.println("   Example:");
         System.out.println("      Enter move: AA L  → draws a vertical line on the left of the tile AA.");
@@ -193,5 +256,5 @@ public class Quoridor extends Games<QuoridorPlayer>{
         System.out.println("When all boxes in the board are filled, the player with the most boxes wins.");
         System.out.println();
         System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-    }    
+    }
 }
