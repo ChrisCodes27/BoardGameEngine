@@ -17,6 +17,8 @@ public int noOfMoves;
 public int choice;
 public boolean win;
 public boolean move;
+public Piece<String> playerPiece;
+public Tile playerPosition;
 
 public String getName()
 {

@@ -17,6 +17,7 @@ import java.util.*;
 public abstract class Games<T extends Player> implements GameFunctions, Instructions{
     protected int numOfPlayers;
     protected List<T> players = new ArrayList<>();
+    printErrorMessage error = new printErrorMessage();
     Scanner inp = new Scanner(System.in);
     public boolean isGameDone = false;
 

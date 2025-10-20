@@ -10,8 +10,6 @@ package player;
 
 import board.Tile;
 import board.Board;
-
-
 import java.util.*;
 
 public class QuoridorPlayer extends Player{
@@ -50,7 +48,10 @@ public class QuoridorPlayer extends Player{
     @Override
     public void move()
     {
-        System.out.println("Enter the tile number that you want to move:");
+       
+        System.out.println("Make your move: ");
+        System.out.println("1. Move your position in the board");
+        System.out.println("2. Place a wall");
         choice = inp.nextInt();
     }
 
@@ -62,6 +63,7 @@ public class QuoridorPlayer extends Player{
     @Override
     public void invalidMove()
     {
-        System.out.println("Thats an invalid move! Select a tile adjacent to the empty slot");
+        System.out.println("Thats an invalid choice! Select a valid choice from the menu!");
+        move();
     }
 }

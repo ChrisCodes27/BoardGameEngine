@@ -14,7 +14,7 @@ import java.util.*;
 public class Tile{
     private int row;
     private int column;
-    public Piece<Integer> piece;
+    public Piece<Integer> val;
 
     public void setRow(int row)
     {
