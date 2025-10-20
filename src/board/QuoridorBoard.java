@@ -16,6 +16,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
     @Override
     public void initializeBoard()
     {
+        System.out.println("Hey");
         int[] arr;
         arr = new int[getRows()*getCols()]; //getting an array of numbers within the range of the board dimensions
         int k =0;
