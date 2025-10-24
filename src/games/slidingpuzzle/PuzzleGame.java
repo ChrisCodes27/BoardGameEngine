@@ -15,6 +15,7 @@ import gameinterfaces.Instructions;
 import games.Games;
 import printerrormessage.printErrorMessage;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class PuzzleGame extends Games<PuzzlePlayer>{
@@ -29,7 +30,7 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
 
     /**
      * Initializing the player for the sliding puzzle game
-     * @param the number of players in the game
+     * @param i
      * @return void function
      */
     @Override
@@ -55,6 +56,7 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
         String size;
         char ch = 'N';
         System.out.println("Hello! Welcome to the Sliding Puzzle Game, what is your name?");
+        System.out.println();
         name = inp.next();
         inp.nextLine();
         players.get(0).setName(name);
