@@ -12,9 +12,14 @@ import java.util.*;
 public class Piece<T> {
     private T valueOnTile;
 
+    public Piece()
+    {
+        this.valueOnTile = null;
+    }
+
     public Piece(T value)
     {
-      this.valueOnTile = value;
+        this.valueOnTile = value;
     }
 
     public T getValueOnTile()

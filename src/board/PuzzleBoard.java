@@ -18,12 +18,6 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
     public Map<Integer, Tile> winState = new HashMap<>();//to store the solved state position with their corresponding values
     List<Integer> adjacentVals = new ArrayList<>();
 
-    /**
-     * Inititalizes the board of BoxTile type and sets the value the row and column of each tile along
-     * with the initial value of the tile. The hashmaps are also updated here.
-     * @param No parameters, uses the variable dotsBoard
-     * @return void function
-     */
     @Override
     public void initializeBoard()
     {
@@ -56,11 +50,6 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         shuffleBoard(); //shuffling the board from a solved state to ensure solvability
     }
 
-    /**
-     * Shuffles the board from a solved state to ensure solvability.
-     * @param No parameters, uses the variable dotsBoard
-     * @return void function
-     */
     public void shuffleBoard()
     {
         int moves=0;
@@ -105,11 +94,6 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         }
     }
 
-    /**
-     * checks the board after every state to see if the board is solved
-     * @param No parameters, uses the variable dotsBoard
-     * @return return true if the board is solved
-     */
     @Override
     public boolean checkBoardState()
     {
@@ -134,11 +118,7 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         }
     }
 
-    /**
-     * Once the user input is received, makeMove() peforms the move according to value selected.
-     * @param value chosen by the user
-     * @return returns true if the move made was an invalid one
-     */
+
     public boolean makeMove(int choice)
     {
         if(choice > getRows()*getCols() || choice < 0) //to check if the choice is out of the range
@@ -163,11 +143,6 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         }
     }
 
-    /**
-     * swap the value chosen by the player with the empty tile
-     * @param the current tile positon of the value chosen and the user inputted choice.
-     * @return void function
-     */
     @Override
     public void swap(Tile p, int choice)
     {
@@ -180,11 +155,6 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         printBoardState();
     }
 
-    /**
-     * To print the board state after every move made by the player
-     * @param No parameters, uses the variable dotsBoard
-     * @return void function
-     */
     @Override
     public void printBoardState()
     {

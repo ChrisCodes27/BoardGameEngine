@@ -5,14 +5,15 @@
  * Description: A class which can be used for games such as Dots and Boxes where there is a focus on each edge
  * of the tile. It also has an object of Piece class to indicate the value on the tile.
  */
-
 package board;
 
-public class BoxTile extends Tile{
-      Edge up, down, left, right;
-      public Piece<String> piece;
+import board.boxpiece.Edge;
 
-      public BoxTile() {
+public class BoxTile<T> extends Tile<T>{
+    Edge up, down, left, right;
+    //public Piece<String> piece;
+
+    public BoxTile() {
         up = new Edge(0, "none");
         down = new Edge(0, "none");
         left = new Edge(0, "none");

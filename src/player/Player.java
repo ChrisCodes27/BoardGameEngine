@@ -38,7 +38,7 @@ public abstract class Player implements MoveFunctions{
 
      /**
       * Checks if the win variable for the player is true, if it is, proceeds to congratulate the user and displays the number of moves made.
-      * @param No paramteres, uses win variable of this class
+      * @param
       * @return void function
       */
      public void checkWin()
