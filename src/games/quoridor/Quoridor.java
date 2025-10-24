@@ -9,15 +9,13 @@ package games.quoridor;
 
 import java.util.*;
 import board.QuoridorBoard;
-import board.BoxTile;
+import board.*;
 import player.QuoridorPlayer;
 import games.Games;
-import colour.colour;
 
 public class Quoridor extends Games<QuoridorPlayer>{
     Scanner inp = new Scanner(System.in);
     QuoridorBoard board = new QuoridorBoard();
-    colour c = new colour();
 
     public Quoridor(int numPlayers)
     {
@@ -31,12 +29,11 @@ public class Quoridor extends Games<QuoridorPlayer>{
      */
     public void assignColour()
     {
-        colour c = new colour();
         int i =0;
         for(QuoridorPlayer player: players)
         {
-            // player.colour = c.colours.get(i);
-            // i++;
+            player.colour = c.colours.get(i);
+            i++;
         }
     }
 
@@ -50,6 +47,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
         String name = " ";
         char ch = 'N';
         String s;
+        String move;
         boolean valid = false;
         boolean checkInput = false;
 
@@ -62,7 +60,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
         do{
             System.out.println();
             checkInput = board.setDimensions(board.getSize()); //to get the rows and columns from the inputting size of the board
-            //checkInput = false;
+            checkInput = false;
             board.dotsBoard = new BoxTile[board.getRows()][board.getCols()]; //initializing the board for the game with the size
             board.initializeBoard();
             setPlayerPosition();
@@ -78,35 +76,37 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     switch(player.choice)
                     {
                         case 1:
-                            board.legalMoves();
+                            board.legalMoves(player);
                             while(checkInput == false)
                             {
                                 System.out.print("Enter your move: ");
-                                inp = nextInt();
-                                if(board.legalMovesList.contains(inp))
+                                move = inp.nextLine();
+                                if(board.getLegalMovesList().contains(Integer.parseInt(move)))
                                 {
-                                    board.makeMove(player, inp);
-                                    checkInput == true;
+                                    board.makeMove(player, Integer.parseInt(move));
+                                    checkInput = true;
                                 }
                                 else{
                                     error.invalidMove();
                                 }
                             }
+                            checkInput = false;
                             break;
                         case 2:
                             while(checkInput == false)
                             {
                                 System.out.print("Enter the tile numbers and the direction of the wall you want to place: ");
-                                inp = nextLine();
-                                if(setFence(inp))
+                                move = inp.nextLine();
+                                if(board.setFence(move, player))
                                 {
                                     System.out.println("Fence placed!");
-                                    checkInput == true;
+                                    checkInput = true;
                                 }
                                 else{
                                     error.invalidMove();
                                 }
                             }
+                            checkInput = false;
                             break;
                         default:
                             player.invalidMove();
@@ -125,7 +125,6 @@ public class Quoridor extends Games<QuoridorPlayer>{
     {
         for(QuoridorPlayer player : players)
         {
-            player.playerPiece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour)
             player.setPlayerFences(players.size());
             System.out.println(player.getName()+":"+player.getFences());
         }
@@ -151,20 +150,24 @@ public class Quoridor extends Games<QuoridorPlayer>{
         int i = 0;
         for(QuoridorPlayer player : players)
         {
-            player.playerPiece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour)
+            player.playerPiece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour);
             switch(i)
             {
                 case 0:
-                    playerPosition = new Tile(0, ((board.getCols() - 1)/2));
+                    player.playerPosition = new Tile<>(0, ((board.getCols() - 1)/2));
+                    board.playerPiecePosition[0][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
                     break;
                 case 1:
-                    playerPosition = new Tile(board.getRows()-1, ((board.getCols() - 1)/2));
+                    player.playerPosition = new Tile<>(board.getRows()-1, ((board.getCols() - 1)/2));
+                    board.playerPiecePosition[board.getRows()-1][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());                   
                     break;
                 case 2:
-                    playerPosition = new Tile(((board.getRows() - 1)/2), 0);
+                    player.playerPosition = new Tile<>(((board.getRows() - 1)/2), 0);
+                    board.playerPiecePosition[((board.getRows() - 1)/2)][0].piece.setValueOnTile(player.playerPiece.getValueOnTile());
                     break;
                 case 3:
-                    playerPosition = new Tile(((board.getRows() - 1)/2), (board.getCols() - 1));
+                    player.playerPosition = new Tile<>(((board.getRows() - 1)/2), (board.getCols() - 1));
+                    board.playerPiecePosition[((board.getRows() - 1)/2)][(board.getCols() - 1)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
                     break;
             }
             i++;

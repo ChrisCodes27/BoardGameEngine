@@ -11,13 +11,16 @@ package games;
 
 import gameinterfaces.GameFunctions;
 import gameinterfaces.Instructions;
+import printerrormessage.printErrorMessage;
+import colour.colour;
 import player.Player;
 import java.util.*;
 
-public abstract class Games<T extends Player> implements GameFunctions, Instructions{
+public abstract class Games<T extends Player> implements Instructions{
     protected int numOfPlayers;
     protected List<T> players = new ArrayList<>();
-    printErrorMessage error = new printErrorMessage();
+    public printErrorMessage error = new printErrorMessage();
+    public colour c = new colour();
     Scanner inp = new Scanner(System.in);
     public boolean isGameDone = false;
 
@@ -60,5 +63,7 @@ public abstract class Games<T extends Player> implements GameFunctions, Instruct
     }
 
     public abstract void initializePlayers(int num);
+
+    public abstract void startGame();
     
 }

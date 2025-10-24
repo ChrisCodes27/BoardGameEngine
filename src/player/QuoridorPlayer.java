@@ -15,6 +15,7 @@ import java.util.*;
 public class QuoridorPlayer extends Player{
     Scanner inp = new Scanner(System.in);
     private int fences;
+    private int winPos;
 
     public QuoridorPlayer()
     {
@@ -48,8 +49,7 @@ public class QuoridorPlayer extends Player{
     @Override
     public void move()
     {
-       
-        System.out.println("Make your move: ");
+        System.out.println(getName() + ", Make your move: ");
         System.out.println("1. Move your position in the board");
         System.out.println("2. Place a wall");
         choice = inp.nextInt();

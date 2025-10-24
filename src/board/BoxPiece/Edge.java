@@ -5,7 +5,9 @@
  * Description: Represents each edge of a tile in a board. It extends Piece and has an attribute edgeColour.
  */
 
-package board;
+package board.boxpiece;
+
+import board.Piece;
 
 public class Edge extends Piece<Integer>{
     public String edgeColour;

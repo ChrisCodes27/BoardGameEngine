@@ -17,7 +17,6 @@ public class DotsAndBoxesPlayer extends Player{
     public String edge;
     private int numOfBoxes;
     public boolean isMoveValid;
-    public String colour;
 
     public DotsAndBoxesPlayer()
     {

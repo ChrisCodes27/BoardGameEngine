@@ -2,145 +2,150 @@ package board;
 
 import java.util.*;
 import gameinterfaces.puzzleinterfaces.PuzzleFunctions;
+import player.QuoridorPlayer;
+import colour.colour;
 
 public class QuoridorBoard extends DotsAndBoxesBoard{
 
     //public BoxTile[][] quoridorBoard;
-    List<Integer> legalMovesList;
+    public Tile[][] playerPiecePosition;
+    private List<Integer> legalMovesList;
 
     public QuoridorBoard()
     {
         legalMovesList = new ArrayList<>();
     }
 
+    public List<Integer> getLegalMovesList()
+    {
+        return legalMovesList;
+    }
+
     @Override
     public void initializeBoard()
     {
-        System.out.println("Hey");
+        initializePlayerPositionBoard();
         int[] arr;
         arr = new int[getRows()*getCols()]; //getting an array of numbers within the range of the board dimensions
         int k =0;
-        for(int i =0;i<arr.length-1;i++)
+        for(int i =0;i<arr.length;i++)
         {
             arr[i] = i+1;
         }
         for(int i =0;i<getRows();i++){
             for(int j=0;j<getCols();j++){
-                dotsBoard[i][j] = new BoxTile();
+                dotsBoard[i][j] = new BoxTile<Integer>();
                 dotsBoard[i][j].setRow(i);
                 dotsBoard[i][j].setColumn(j);
-                dotsBoard[i][j].val = new Piece<>(arr[k]);
+                dotsBoard[i][j].piece = new Piece<>(arr[k]);
                 k++;
         }
         }
     }
+
+    public void initializePlayerPositionBoard()
+    {
+        playerPiecePosition = new Tile[getRows()][getCols()];
+        for(int i =0;i<getRows();i++){
+            for(int j=0;j<getCols();j++){
+                //playerPiecePosition[i][j] = new Tile();
+                //playerPiecePosition[i][j].val = new Piece<>(0);
+                playerPiecePosition[i][j] = new Tile<String>();
+                playerPiecePosition[i][j].piece = new Piece<>("0");
+            }
+        }
+    }
+
     @Override
     public boolean checkBoardState()
     {
         return true;
     }
+
     @Override
     public void printBoardState()
     {
         colour c = new colour();
         int i,j;
-        System.out.print("    ");
-        // for(j=0; j<getCols();j++)
-        // {
-        //     System.out.print("     "+r+"     ");
-        //     r++;
-        // }
-        System.out.println();
         //Iterating through an abstract matrix of (2n+1,2m+1). This includes the * and the edges. The *'s start from
         //0 and are incremented by n+2 while the edges start from 1 and increment by n+2.
         for (i=0; i<2*getRows()+1;i++) 
         {
-            // if(i%2 != 0)
-            // {
-            //     System.out.print(cl);
-            //     cl++;
-            // }
             for (j=0; j<2*getCols()+1;j++) 
             {
                 //to print *
                 if (i%2 == 0 && j%2 == 0) //Every * is located at an even position, so we check for i and j %2 = 0
                 {
-                    System.out.print("   * ");
+                    System.out.print("  * ");
                 }
                 //to print the horizontal edges (up and down)
                 else if (i%2 == 0 && j%2 == 1) //Every up and down edge is located at a position where the i is even and j is odd inside the abstract matrix
                 {
-                    int row = i/2; //The original position of the edge in the nxm matrix is i and j divided by 2
+                    int row = i/2;
                     int col = j/2;
 
-                    if (row < getRows()+1 && col < getCols()) { //validating bounds
-                       // if (row < getRows() && dotsBoard[row][col].up.getValueOnTile().equals(1)) {
-                            System.out.print(dotsBoard[row][col].up.edgeColour+"  ——— "+c.endColour);
-                       // } else if (row > 0 && dotsBoard[row - 1][col].down.getValueOnTile().equals(1)) {
-                            System.out.print(dotsBoard[row-1][col].down.edgeColour+"  ——— "+c.endColour);
-                        //} else {
-                            System.out.print("      ");
-                        //}
-                    } 
-                    else 
+                    if (row < getRows()+1 && col < getCols())
                     {
-                        System.out.print("      ");
+                        if(row < getRows() && dotsBoard[row][col].up.getValueOnTile().equals(1))
+                        {System.out.print(dotsBoard[row][col].up.edgeColour+ "  —— " +c.endColour);}
+                        else if(row > 0 && dotsBoard[row-1][col].down.getValueOnTile().equals(1))
+                        {System.out.print(dotsBoard[row-1][col].down.edgeColour+ "  —— " +c.endColour);}
+                        else
+                        {System.out.print("  —— ");}
                     }
                 }
                 //to print the vertical edges (left and rigt)
                 else if (i%2 == 1 && j%2 == 0) //The left and right edges are located at positions where i is odd and j is even inside the abstract matrix
                 {
-                    int row = i/2; //The original position of the edge in the nxm matrix is i and j divided by 2
+                    int row = i/2;
                     int col = j/2;
 
-                    if (row < getRows() && col < getCols()+1) { //validating bounds
-                        if (col < getCols() && dotsBoard[row][col].left.getValueOnTile().equals(1)){
-                            System.out.print(dotsBoard[row][col].left.edgeColour+"   | "+c.endColour);
-                        } else if (col > 0 && dotsBoard[row][col - 1].right.getValueOnTile().equals(1)) {
-                            System.out.print(dotsBoard[row][col-1].right.edgeColour+"   | "+c.endColour);
-                        } else {
-                            System.out.print("     ");
-                        }
-                    } 
-                    else
+                    if (row < getRows() && col < getCols() + 1)
                     {
-                        System.out.print("     ");
+                        if(col < getCols() && dotsBoard[row][col].left.getValueOnTile().equals(1))
+                        {System.out.print(dotsBoard[row][col].left.edgeColour+ "    | " +c.endColour);}
+                        else if(col > 0 && dotsBoard[row][col-1].right.getValueOnTile().equals(1))
+                        {System.out.print(dotsBoard[row][col-1].right.edgeColour+ "    | " +c.endColour);}
+                        else
+                        {System.out.print("   | ");} 
                     }
-                }
+                } 
                 //to print the intitals of the player if all four edges of a tile is 1
                 else if (i%2 == 1 && j%2 == 1) //When both i and j are odd, to mark the initial of the player if they have a box claimed
                 {
                     int row = (i-1)/2;
                     int col = (j-1)/2;
-                    if (row < getRows() && col < getCols() && !dotsBoard[row][col].piece.getValueOnTile().equals("0")) 
-                    {
-                        System.out.print("  "+ dotsBoard[row][col].piece.getValueOnTile()+ "  ");
-                    } 
-                    else 
-                    {
-                        System.out.print("     ");
-                    }
+
+                    if (i == 1 && !playerPiecePosition[row][col].piece.getValueOnTile().equals("0"))
+                    {System.out.print("  "+ playerPiecePosition[row][col].piece.getValueOnTile()+" ");}
+                    else if (!playerPiecePosition[row][col].piece.getValueOnTile().equals("0"))
+                    {System.out.print("  "+ playerPiecePosition[row][col].piece.getValueOnTile()+" ");}
+                    else if (i==1)
+                    {System.out.print("  "+ dotsBoard[row][col].piece.getValueOnTile()+" ");}
+                    else
+                    {System.out.print(" "+ dotsBoard[row][col].piece.getValueOnTile()+" ");}
                 }
-        }
+            }
             System.out.println();
         }
     }
 
-    public void makeMove(Quoridor player, int move)
+    public void makeMove(QuoridorPlayer player, int move)
     {
         int i = (move - 1)/getRows();
-        int j = (mvoe - 1)%getCols();
+        int j = (move - 1)%getCols();
+
+        playerPiecePosition[player.playerPosition.getRow()][player.playerPosition.getColumn()].piece.setValueOnTile("0");
                 
-        if(dotsBoard[i][j].val.getValueOnTile() == move)
+        if((Integer)dotsBoard[i][j].piece.getValueOnTile() == move)
         {
             player.playerPosition.setRow(i);
             player.playerPosition.setColumn(j);
-            break;
-        } 
-                
+            playerPiecePosition[i][j].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+        }     
     }
 
-    public boolean setFence(String fence)
+    public boolean setFence(String fence, QuoridorPlayer player)
     {
         fence = fence.trim();
         String[] parts = fence.split("\\s+");
@@ -152,7 +157,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
             num1 = Integer.parseInt(parts[0]);
             num2 = Integer.parseInt(parts[1]);
             edge = parts[2];
-            if(num1 > 0 && num1 < (getRows*getCols) && num2 > 0 && num2 < (getRows*getCols) && (num1 + 1 == num2 || num2 == num1 + 9))
+            if(num1 > 0 && num1 < (getRows()*getCols()) && num2 > 0 && num2 < (getRows()*getCols()) && (num1 + 1 == num2 || num2 == num1 + 9))
             {
                 int i1 = (num1 - 1)/getRows();
                 int j1 = (num1 - 1)%getCols();
@@ -162,22 +167,40 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                 {
                     switch(edge)
                     {
-                        case 'U':
-                            if(dotsBoard[i1][j1].up.getValueOnTile.equals(0) && dotsBoard[i2][j2].up.getValueOnTile.equals(0))
+                        case "U":
+                            if(dotsBoard[i1][j1].up.getValueOnTile().equals(0) && dotsBoard[i2][j2].up.getValueOnTile().equals(0))
                             {
                                 dotsBoard[i1][j1].up.setValueOnTile(1);
                                 dotsBoard[i2][j2].up.setValueOnTile(1);
+
+                                dotsBoard[i1-1][j1].down.setValueOnTile(1);
+                                dotsBoard[i2-1][j2].down.setValueOnTile(1);
+
+                                dotsBoard[i1][j1].up.edgeColour = player.colour;
+                                dotsBoard[i2][j2].up.edgeColour = player.colour;
+
+                                dotsBoard[i1-1][j1].down.edgeColour = player.colour;
+                                dotsBoard[i2-1][j2].down.edgeColour = player.colour;
                             }
                             else{
                                 System.out.println("A fence has already been placed here!");
                                 return false;
                             }
                             break;
-                        case 'D':
-                            if(dotsBoard[i1][j1].up.getValueOnTile.equals(0) && dotsBoard[i2][j2].up.getValueOnTile.equals(0))
+                        case "D":
+                            if(dotsBoard[i1][j1].down.getValueOnTile().equals(0) && dotsBoard[i2][j2].down.getValueOnTile().equals(0))
                             {
-                                dotsBoard[i1][j1].up.setValueOnTile(1);
-                                dotsBoard[i2][j2].up.setValueOnTile(1);
+                                dotsBoard[i1][j1].down.setValueOnTile(1);
+                                dotsBoard[i2][j2].down.setValueOnTile(1);
+
+                                dotsBoard[i1][j1].down.edgeColour = player.colour;
+                                dotsBoard[i2][j2].down.edgeColour = player.colour;
+
+                                dotsBoard[i1+1][j1].up.setValueOnTile(1);
+                                dotsBoard[i2+1][j2].up.setValueOnTile(1);
+                                
+                                dotsBoard[i1+1][j1].up.edgeColour = player.colour;
+                                dotsBoard[i2+1][j2].up.edgeColour = player.colour;
                             }
                             else{
                                 System.out.println("A fence has already been placed here!");
@@ -185,30 +208,45 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                             }
                             break;
                         default:
-                            return isValid;
+                            return false;
                     }
+                    player.setFences(player.getFences()-1);
                     return true;
                 }
                 else if ((edge.equals("L") || edge.equals("R")) && num1 + 9 == num2)
                 {
                      switch(edge)
                     {
-                        case 'L':
-                            if(dotsBoard[i1][j1].left.getValueOnTile.equals(0) && dotsBoard[i2][j2].left.getValueOnTile.equals(0))
+                        case "L":
+                            if(dotsBoard[i1][j1].left.getValueOnTile().equals(0) && dotsBoard[i2][j2].left.getValueOnTile().equals(0))
                             {
                                 dotsBoard[i1][j1].left.setValueOnTile(1);
                                 dotsBoard[i2][j2].left.setValueOnTile(1);
+                                dotsBoard[i1][j1].left.edgeColour = player.colour;
+                                dotsBoard[i2][j2].left.edgeColour = player.colour;
+
+                                dotsBoard[i1][j1-1].right.setValueOnTile(1);
+                                dotsBoard[i2][j2-1].right.setValueOnTile(1);
+                                dotsBoard[i1][j1-1].right.edgeColour = player.colour;
+                                dotsBoard[i2][j2-1].right.edgeColour = player.colour;
                             }
                             else{
                                 System.out.println("A fence has already been placed here!");
                                 return false;
                             }
                             break;
-                        case 'R':
-                            if(dotsBoard[i1][j1].right.getValueOnTile.equals(0) && dotsBoard[i2][j2].right.getValueOnTile.equals(0))
+                        case "R":
+                            if(dotsBoard[i1][j1].right.getValueOnTile().equals(0) && dotsBoard[i2][j2].right.getValueOnTile().equals(0))
                             {
                                 dotsBoard[i1][j1].right.setValueOnTile(1);
                                 dotsBoard[i2][j2].right.setValueOnTile(1);
+                                dotsBoard[i1][j1].right.edgeColour = player.colour;
+                                dotsBoard[i2][j2].right.edgeColour = player.colour;
+
+                                dotsBoard[i1][j1+1].left.setValueOnTile(1);
+                                dotsBoard[i2][j2+1].left.setValueOnTile(1);
+                                dotsBoard[i1][j1+1].left.edgeColour = player.colour;
+                                dotsBoard[i2][j2+1].left.edgeColour = player.colour;
                             }
                             else{
                                 System.out.println("A fence has already been placed here!");
@@ -216,8 +254,9 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                             }
                             break;
                         default:
-                            return isValid;
+                            return false;
                     }
+                    player.setFences(player.getFences()-1);
                     return true;
                 }
             }
@@ -229,10 +268,12 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         {
             return false;
         }
+        return true; //check
     }
 
-    public void legalMoves(Quoridor player)
+    public void legalMoves(QuoridorPlayer player)
     {
+        legalMovesList.clear();
         int i = player.playerPosition.getRow();
         int j = player.playerPosition.getColumn();
 
@@ -240,37 +281,37 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         {
             if(dotsBoard[i][j].down.getValueOnTile().equals(0))
             {
-                legalMovesList.add(dotsBoard[i+1][j].val);
+                legalMovesList.add((Integer)dotsBoard[i+1][j].piece.getValueOnTile());
             }
         }
 
-         if ( i-1 > 0)
+         if ( i-1 >= 0)
         {
             if(dotsBoard[i][j].up.getValueOnTile().equals(0))
             {
-                legalMovesList.add(dotsBoard[i-1][j].val);
+                legalMovesList.add((Integer)dotsBoard[i-1][j].piece.getValueOnTile());
             }
         }
 
          if ( j+1 < getCols())
         {
-            if(dotsBoard[i][j].down.getValueOnTile().equals(0))
+            if(dotsBoard[i][j].right.getValueOnTile().equals(0))
             {
-                legalMovesList.add(dotsBoard[i][j+1].val);
+                legalMovesList.add((Integer)dotsBoard[i][j+1].piece.getValueOnTile());
             }
         }
-         if ( j-1 > 0)
+         if ( j-1 >= 0)
         {
-            if(dotsBoard[i][j].down.getValueOnTile().equals(0))
+            if(dotsBoard[i][j].left.getValueOnTile().equals(0))
             {
-                legalMovesList.add(dotsBoard[i][j-1].val);
+                legalMovesList.add((Integer)dotsBoard[i][j-1].piece.getValueOnTile());
             }
         }
 
         System.out.print("These are your legal moves: ");
-        for(int i: legalMovesList)
+        for(int l: legalMovesList)
         {
-            System.out.print(i + "  ");
+            System.out.print(l + "  ");
         }
         System.out.println();
     }

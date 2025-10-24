@@ -8,8 +8,9 @@
 package player;
 import gameinterfaces.MoveFunctions;
 import board.Board;
-
+import board.Tile;
 import java.util.*;
+import board.Piece;
 
 public abstract class Player implements MoveFunctions{
 private String name;
@@ -17,8 +18,14 @@ public int noOfMoves;
 public int choice;
 public boolean win;
 public boolean move;
+public String colour;
 public Piece<String> playerPiece;
 public Tile playerPosition;
+
+public Player()
+{
+     playerPiece = new Piece<String>();
+}
 
 public String getName()
 {
