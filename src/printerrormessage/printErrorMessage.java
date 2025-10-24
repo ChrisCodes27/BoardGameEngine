@@ -20,7 +20,12 @@ public class printErrorMessage{
     {
         System.out.println("Invalid Input! Select a valid item from the menu.");
     }
-    
+
+    public void invalidMove()
+    {
+        System.out.println("Invalid move! Select a valid move!");
+    }
+
     /**
      * displays an error message if the type of input is not valid (for moves, etc)
      * @param No parameters
@@ -28,6 +33,6 @@ public class printErrorMessage{
      */
     public void invalidTypeInput(String type)
     {
-       System.out.println("Invalid Input! Input a valid "+type+"!");
+        System.out.println("Invalid Input! Input a valid "+type+"!");
     }
 }
