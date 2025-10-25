@@ -66,4 +66,6 @@ public abstract class Games<T extends Player> implements Instructions{
 
     public abstract void startGame();
 
+    public abstract void checkWhoWon();
+
 }

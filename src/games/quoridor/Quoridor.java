@@ -215,7 +215,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
         for (QuoridorPlayer p: players)
         {
             Tile originalPos = new Tile<>(p.playerPosition);
-            //originalPos.copy(p.playerPosition);
+            originalPos.copy(p.playerPosition);
             int start = ((p.playerPosition.getRow())*board.getCols())+p.playerPosition.getColumn() + 1;
             Queue<Integer> queue = new LinkedList<>();
             List<Integer> visited = new ArrayList<>();

@@ -11,9 +11,9 @@ import java.util.*;
 import games.GameStarter;
 
 public class Game{
-public static void main(String[] args)
-{
-GameStarter g = new GameStarter();
-g.chooseGame(); //directs to the class containing the menu
-}
+    public static void main(String[] args)
+    {
+        GameStarter g = new GameStarter();
+        g.chooseGame(); //directs to the class containing the menu
+    }
 }
