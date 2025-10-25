@@ -55,7 +55,6 @@ public class Quoridor extends Games<QuoridorPlayer>{
         setPlayerName();
         setFencesforPlayer();
         assignColour();
-        displayInstructions();
 
         do{
             System.out.println();
@@ -63,6 +62,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
             checkInput = false;
             board.dotsBoard = new BoxTile[board.getRows()][board.getCols()]; //initializing the board for the game with the size
             board.initializeBoard();
+            displayInstructions();
             setPlayerPosition();
 
             System.out.println();
@@ -76,7 +76,9 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     switch(player.choice)
                     {
                         case 1:
-                            board.legalMoves(player);
+                            int[] currPos = getCurrentPosition(player);
+                            board.legalMoves(currPos[0], currPos[1]);
+                            board.edgeCaseMoves(currPos[0], currPos[1]);
                             while(checkInput == false)
                             {
                                 printLegalMoves();
@@ -90,6 +92,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                                 else{
                                     error.invalidMove();
                                 }
+                                board.getLegalMovesList().clear();
                             }
                             checkInput = false;
                             break;
@@ -136,7 +139,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     board.printBoardState();
                 }
             }
-            System.out.println("Do you want to play another round? (Y/N)");
+            System.out.print("Do you want to play another round? (Y/N):  ");
             ch = inp.next().charAt(0);
             //restore();
         }while(Character.toLowerCase(ch)=='y');
@@ -149,6 +152,14 @@ public class Quoridor extends Games<QuoridorPlayer>{
             player.setPlayerFences(players.size());
             System.out.println(player.getName()+":"+player.getFences());
         }
+    }
+
+    public int[] getCurrentPosition(QuoridorPlayer player)
+    {
+        int[] currPos = new int[2];
+        currPos[0] = player.playerPosition.getRow();
+        currPos[1] = player.playerPosition.getColumn();
+        return currPos;
     }
 
     /**
@@ -214,8 +225,13 @@ public class Quoridor extends Games<QuoridorPlayer>{
         int count = 0;
         for (QuoridorPlayer p: players)
         {
+<<<<<<< HEAD
             Tile originalPos = new Tile<>(p.playerPosition);
             originalPos.copy(p.playerPosition);
+=======
+            //Tile originalPos = new Tile<>(p.playerPosition);
+            //originalPos.copy(p.playerPosition);
+>>>>>>> fcdbf8d208dfced2065708ee24af7ee1af262afb
             int start = ((p.playerPosition.getRow())*board.getCols())+p.playerPosition.getColumn() + 1;
             Queue<Integer> queue = new LinkedList<>();
             List<Integer> visited = new ArrayList<>();
@@ -230,15 +246,15 @@ public class Quoridor extends Games<QuoridorPlayer>{
                 int i = (current - 1)/board.getRows();
                 int j = (current - 1)%board.getCols();
 
-                p.playerPosition.setRow(i);
-                p.playerPosition.setColumn(j);
-
-                board.legalMoves(p);
+                //p.playerPosition.setRow(i);
+                //.playerPosition.setColumn(j);
+                board.getLegalMovesList().clear();
+                board.legalMoves(i, j);
                 List<Integer> l = board.getLegalMovesList();
 
                 if(p.winPos.getRow() == i)
                 {
-                    p.playerPosition.copy(originalPos);
+                    //p.playerPosition.copy(originalPos);
                     count++;
                     break;
                 }
@@ -253,8 +269,9 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     }
                 }
             }
-            p.playerPosition.copy(originalPos);
+            //p.playerPosition.copy(originalPos);
         }
+        board.getLegalMovesList().clear();
         System.out.print(count);
         if(count == players.size())
         {
@@ -310,17 +327,6 @@ public class Quoridor extends Games<QuoridorPlayer>{
      * @param No parameters
      * @return void function
      */
-    // public void stats()
-    // {
-    //     System.out.println();
-    //     board.printBoardState();
-    //     System.out.println();
-    //     System.out.println(" -------------------------------------------------------------");
-    //     System.out.print("|"+ "\033[1;31;47m"+players.get(0).getName()+"'s boxes: "+players.get(0).getNumOfBoxes());
-    //     System.out.print("      "+ players.get(1).getName()+"'s boxes: "+players.get(1).getNumOfBoxes());
-    //     System.out.println("       Total boxes :" + board.getTotalBoxes() +"          \033[0m"+"|");
-    //     System.out.println(" -------------------------------------------------------------");
-    // }
 
     /**
      * To display the instructions on how to play the game to the users
@@ -333,22 +339,29 @@ public class Quoridor extends Games<QuoridorPlayer>{
         System.out.println("\033[1;31;47m              QUORIDOR            \033[0m");
         System.out.println("\u001B[31m------------------------------------------\u001B[0m");
         System.out.println();
-        System.out.println("GOAL: Complete more boxes than your opponent by drawing lines between dots. Each box completed with the 4th edge earns you one point!");
+        System.out.println("GOAL: Reach the opposite side of the board before your opponent! Each player moves their pawn across the 9x9 grid while strategically placing walls to block the other player’s path.");
         System.out.println();
         System.out.println("\u001B[31mHOW TO PLAY:\u001B[0m");
-        System.out.println("1. The board is labeled with letters for rows and columns (A, B, C, ...). For example, the coordinates of the first tile in the board is AA.");
-        //board.printExampleBoard(); //to print an example of how the dots and board board is
         System.out.println();
-        System.out.println("Each tile in the board has four different directions - UP (U), DOWN (D), LEFT (L) and RIGHT (R)");
-        System.out.println("2. To mark an edge of each tile, type the coordinates of the box and the direction in which you want to draw the line.");
-        System.out.println("   Example:");
-        System.out.println("      Enter move: AA L  → draws a vertical line on the left of the tile AA.");
-        System.out.println("      Enter move: AB U  → draws a horizontal line on the top of the tile AB.");
+        System.out.println("1. The board is labeled with numbers from 1 to 81, representing each tile position.");
+        board.printBoardExample();
+        System.out.println("2. On your turn, you are given two options:");
+        System.out.println("   +> Make Your Move : Move your pawn to a valid adjacent tile by entering its tile number.");
+        System.out.println("     Example:");
+        System.out.println("        These are your legal moves: 14  6  4 ");
+        System.out.println("        Enter your move: 14  moves your pawn to tile 46.");
         System.out.println();
-        System.out.println("3. Completing a box earns you a point and another turn!");
-        System.out.println("4. If you want to quit the game at any point, please type 'QUIT'");
-        System.out.println("When all boxes in the board are filled, the player with the most boxes wins.");
+        System.out.println("   +> Place a wall: You may place a wall between two adjacent tiles to block your opponent’s path.");
+        System.out.println("     Walls can be placed horizontally or vertically, using the direction 'U' (up) or 'D' (down).");
+        System.out.println("     Example:");
+        System.out.println("        Enter move: 45 46 U  → places a horizontal wall above tiles 45 and 46.");
+        System.out.println("        Enter move: 1 10 D   → places a vertical wall below tiles 1 and 10.");
         System.out.println();
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
+        System.out.println("3. An option to quit will always be present during the players move.");
+        System.out.println("4. You will not be allowed to completely block your opponents path towards the goal, just enough to mildly irritate them.");
+        System.out.println();
+        System.out.println(" MAY THE BEST PLAYER WIN!");
+        System.out.println();
+        System.out.println("\u001B[31m--------------------------------------------------------------------------------\u001B[0m");
     }
 }

@@ -10,13 +10,14 @@ package games;
 import games.slidingpuzzle.PuzzleGame;
 import games.dotsandboxes.DotsAndBoxes;
 import games.quoridor.Quoridor;
+import printerrormessage.printErrorMessage;
 
 import java.util.*;
 
 public class GameStarter{
     private int choice;
     Scanner inp = new Scanner(System.in);
-
+    printErrorMessage error = new printErrorMessage();
     /**
      * contains a menu of games for the player to choose from
      * @param no parameters
@@ -27,12 +28,18 @@ public class GameStarter{
         char continueGame = 'N';
         do{
         System.out.println("Welcome! Choose a game from the menu below by entering the corresponding serial number: ");
-        System.out.println("1. Sliding Puzzle");
-        System.out.println("2. Dots And Boxes");
-        System.out.println("3. Quoridor");
-        System.out.println("4. Quit Game");
-        
-        choice = inp.nextInt();
+        System.out.println("    1. Sliding Puzzle");
+        System.out.println("    2. Dots And Boxes");
+        System.out.println("    3. Quoridor");
+        System.out.println("    4. Quit Game");
+        System.out.print("Enter Your Choice (1-4):  ");
+        try{
+            choice = inp.nextInt();}
+        catch (InputMismatchException e) {
+            error.invalidMenuInput();
+            inp.nextLine();
+            }
+
         switch(choice)
         {
             case 1:
@@ -56,14 +63,16 @@ public class GameStarter{
                 System.exit(0);
                 break;
             default:
-                System.out.println("Choose a number from the menu!"); //invalid input
+                error.invalidMenuInput();//invalid input
+                boolean loop = true;
                 break;
         }
-        System.out.println("Do you want to play another game? (Y/N)"); //after a game is played, asks the player if they want to play another type of game
+
+        System.out.print("Do you want to play another game? (Y/N):  "); //after a game is played, asks the player if they want to play another type of game
 
         continueGame = inp.next().charAt(0);
-        }while(Character.toLowerCase(continueGame)=='y');
-
+        } while(Character.toLowerCase(continueGame)=='y');
+        System.out.println();
         System.out.println("See you later!");
     }
 }

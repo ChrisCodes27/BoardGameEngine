@@ -1,4 +1,4 @@
-/**
+/**3
  * Filename: Game.java
  * Author: Chris Mary Benson, Nandana Shashi
  * Date: 2025-Sept-14
@@ -11,9 +11,9 @@ import java.util.*;
 import games.GameStarter;
 
 public class Game{
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         GameStarter g = new GameStarter();
-        g.chooseGame(); //directs to the class containing the menu
+        // Directs to the class containing the menu
+        g.chooseGame();
     }
 }
