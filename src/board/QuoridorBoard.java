@@ -270,6 +270,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         return true; //check
     }
 
+
     public void legalMoves(QuoridorPlayer player)
     {
         legalMovesList.clear();
@@ -313,5 +314,37 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
             System.out.print(l + "  ");
         }
         System.out.println();
+    }
+
+    public void printBoardExample() {
+        int i, j, val;
+        val = 1;
+
+        for (i = 0; i < 2 * getRows() + 1; i++) {
+            for (j = 0; j < 2 * getCols() + 1; j++) {
+                // To print *
+                if (i % 2 == 0 && j % 2 == 0) {
+                    System.out.print("  * ");
+                }
+
+                //To print the horizontal edges (up and down)
+                else if (i % 2 == 0 && j % 2 == 1) {
+                    System.out.print("  —— ");
+                }
+
+                // To print the vertical edges (left and right)
+                else if (i % 2 == 1 && j % 2 == 0) {
+                    System.out.print("    | ");
+                }
+
+                // To print the intital's of the player
+                else if (i % 2 == 1 && j % 2 == 1) {
+                    System.out.print("  " + val + " ");
+                    val++;
+                }
+            }
+            System.out.println();
+        }
+
     }
 }

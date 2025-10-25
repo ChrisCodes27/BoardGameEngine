@@ -19,11 +19,13 @@ public class printErrorMessage{
     public void invalidMenuInput()
     {
         System.out.println("Invalid Input! Select a valid item from the menu.");
+        System.out.println();
     }
 
     public void invalidMove()
     {
         System.out.println("Invalid move! Select a valid move!");
+        System.out.println();
     }
 
     /**
@@ -34,5 +36,6 @@ public class printErrorMessage{
     public void invalidTypeInput(String type)
     {
         System.out.println("Invalid Input! Input a valid "+type+"!");
+        System.out.println();
     }
 }
