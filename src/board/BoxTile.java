@@ -9,9 +9,8 @@ package board;
 
 import board.boxpiece.Edge;
 
-public class BoxTile<T> extends Tile<T>{
+public class BoxTile<T> extends Tile<T> {
     Edge up, down, left, right;
-    //public Piece<String> piece;
 
     public BoxTile() {
         up = new Edge(0, "none");

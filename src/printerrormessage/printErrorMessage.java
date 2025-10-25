@@ -37,4 +37,12 @@ public class printErrorMessage{
         System.out.println("Invalid Input! Input a valid "+type+"!");
         System.out.println();
     }
+
+    public void fencePlaced(){
+        System.out.println("A fence has already been placed here!");;
+    }
+
+    public void invalidPath(){
+        System.out.println("No Valid Path Available For your Opponent! Illegal move!");
+    }
 }

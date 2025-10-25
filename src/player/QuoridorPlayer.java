@@ -11,10 +11,12 @@ package player;
 import board.Tile;
 import board.Board;
 import java.util.*;
+import printerrormessage.printErrorMessage;
 
 public class QuoridorPlayer extends Player{
     Scanner inp = new Scanner(System.in);
     private int fences;
+    printErrorMessage error = new printErrorMessage();
 
     public QuoridorPlayer()
     {
@@ -52,14 +54,24 @@ public class QuoridorPlayer extends Player{
     @Override
     public void move()
     {
+        boolean flag = true;
         System.out.println(getName() + ", Make your move: ");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("    1. Move your position in the board");
-        System.out.println("    2. Place a wall");
-        System.out.println("    3. Quit");
-        System.out.print("Enter your choice (1-3):  ");
-        choice = inp.nextInt();
+        while (flag) {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("    1. Move your position in the board");
+            System.out.println("    2. Place a wall");
+            System.out.println("    3. Quit");
+            System.out.print("Enter your choice (1-3):  ");
+            try {
+                choice = inp.nextInt();
+                flag = false;
+            } catch (InputMismatchException e) {
+                inp.nextLine();
+                error.invalidMove();
+            }
+        }
     }
+
 
     /**
      * To display an error message if the input of the player is not a valid one
