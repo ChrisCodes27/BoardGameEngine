@@ -4,12 +4,14 @@ import java.util.*;
 import gameinterfaces.puzzleinterfaces.PuzzleFunctions;
 import player.QuoridorPlayer;
 import colour.colour;
+import printerrormessage.printErrorMessage;
 
 public class QuoridorBoard extends DotsAndBoxesBoard{
 
     //public BoxTile[][] quoridorBoard;
     public Tile[][] playerPiecePosition;
     private List<Integer> legalMovesList;
+    printErrorMessage error = new printErrorMessage();
 
     public QuoridorBoard()
     {
@@ -156,14 +158,14 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         if (parts.length == 3) {
             num1 = Integer.parseInt(parts[0]);
             num2 = Integer.parseInt(parts[1]);
-            edge = parts[2];
-            if(num1 > 0 && num1 < (getRows()*getCols()) && num2 > 0 && num2 < (getRows()*getCols()) && (num1 + 1 == num2 || num2 == num1 + 9))
+            edge = parts[2].toUpperCase();
+            if(num1 > 0 && num1 < (getRows()*getCols()) && num2 > 0 && num2 < (getRows()*getCols()) && ((num1 + 1 == num2) || (num2 == num1 + 9) || (num2 + 1 == num1) || (num1 == num2 + 9)))
             {
                 int i1 = (num1 - 1)/getRows();
                 int j1 = (num1 - 1)%getCols();
                 int i2 = (num2 - 1)/getRows();
                 int j2 = (num2 - 1)%getCols();
-                if((edge.equals("U") || edge.equals("D")) && num1 + 1 == num2)
+                if( (edge.equals("U") || edge.equals("D")) && ((num1 + 1 == num2) || (num2 + 1 == num1)))
                 {
                     switch(edge)
                     {
@@ -181,10 +183,9 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
 
                                 dotsBoard[i1-1][j1].down.edgeColour = player.colour;
                                 dotsBoard[i2-1][j2].down.edgeColour = player.colour;
-                                System.out.println("Hey");
                             }
                             else{
-                                System.out.println("A fence has already been placed here!");
+                                error.fencePlaced();
                                 return false;
                             }
                             break;
@@ -204,18 +205,17 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                                 dotsBoard[i2+1][j2].up.edgeColour = player.colour;
                             }
                             else{
-                                System.out.println("A fence has already been placed here!");
+                                error.fencePlaced();
                                 return false;
                             }
                             break;
                         default:
                             return false;
                     }
-                    //findValidPath();
                     player.decreaseFences();
                     return true;
                 }
-                else if ((edge.equals("L") || edge.equals("R")) && num1 + 9 == num2)
+                else if ((edge.equals("L") || edge.equals("R")) && ((num1 + 9 == num2) || (num2 + 9 == num1)))
                 {
                     switch(edge)
                     {
@@ -233,7 +233,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                                 dotsBoard[i2][j2-1].right.edgeColour = player.colour;
                             }
                             else{
-                                System.out.println("A fence has already been placed here!");
+                                error.fencePlaced();
                                 return false;
                             }
                             break;
@@ -251,7 +251,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                                 dotsBoard[i2][j2+1].left.edgeColour = player.colour;
                             }
                             else{
-                                System.out.println("A fence has already been placed here!");
+                                error.fencePlaced();
                                 return false;
                             }
                             break;
@@ -274,7 +274,6 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         {
             return false;
         }
-        //return true; //check
     }
 
 
@@ -310,7 +309,6 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                 legalMovesList.add((Integer)dotsBoard[i][j-1].piece.getValueOnTile());
             }
         }
-        //edgeCaseMoves(i, j);
     }
 
     public void edgeCaseMoves(int i, int j){

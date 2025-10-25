@@ -13,14 +13,18 @@ import board.*;
 import player.QuoridorPlayer;
 import games.Games;
 
-public class Quoridor extends Games<QuoridorPlayer>{
+import javax.swing.*;
+
+public class Quoridor extends Games<QuoridorPlayer> {
     Scanner inp = new Scanner(System.in);
     QuoridorBoard board = new QuoridorBoard();
 
-    public Quoridor()
-    {
-        super(2); //To initialize the Quoridor players
-        board.setSize("9x9"); //Setting the size of the board to 9x9
+    public Quoridor() {
+        // To initialize the Quoridor players
+        super(2);
+
+        // Setting the size of the board to 9x9
+        board.setSize("9x9");
     }
 
     /**
@@ -29,9 +33,8 @@ public class Quoridor extends Games<QuoridorPlayer>{
      */
     public void assignColour()
     {
-        int i =0;
-        for(QuoridorPlayer player: players)
-        {
+        int i = 0;
+        for(QuoridorPlayer player: players) {
             player.colour = c.colours.get(i);
             i++;
         }
@@ -44,15 +47,10 @@ public class Quoridor extends Games<QuoridorPlayer>{
     @Override
     public void startGame()
     {
-        String name = " ";
         char ch = 'N';
-        String s;
-        String move;
-        boolean valid = false;
         boolean checkInput = false;
-
         System.out.println("Welcome to the Quoridor Game!");
-
+        System.out.println();
         setPlayerCount(players.size());
         setPlayerName();
         setFencesforPlayer();
@@ -60,96 +58,48 @@ public class Quoridor extends Games<QuoridorPlayer>{
 
         do{
             System.out.println();
-            checkInput = board.setDimensions(board.getSize()); //to get the rows and columns from the inputting size of the board
+            // Gets and validate the board dimensions based on the selected size
+            checkInput = board.setDimensions(board.getSize());
             checkInput = false;
-            board.dotsBoard = new BoxTile[board.getRows()][board.getCols()]; //initializing the board for the game with the size
+
+            // Initializing the board for the game with the size
+            board.dotsBoard = new BoxTile[board.getRows()][board.getCols()];
             board.initializeBoard();
             displayInstructions();
             setPlayerPosition();
-            int index = 0;
-
             System.out.println();
-
             board.printBoardState();
-            while (isGameDone == false) //If the game has slots with no boxes claimed, the game must continue
+
+            // If the game has slots with no boxes claimed, the game must continue
+            while (isGameDone == false)
             {
-                players.get(index).move();
-                switch(players.get(index).choice)
+                players.get(indexOfPlayer).move();
+                switch(players.get(indexOfPlayer).choice)
                 {
                     case 1:
-                        int[] currPos = getCurrentPosition(players.get(index));
-                        board.legalMoves(currPos[0], currPos[1]);
-                        board.edgeCaseMoves(currPos[0], currPos[1]);
-                        while(checkInput == false)
-                        {
-                            printLegalMoves();
-                            System.out.print("Enter your move: ");
-                            move = inp.nextLine();
-                            if(board.getLegalMovesList().contains(Integer.parseInt(move)))
-                            {
-                                board.makeMove(players.get(index), Integer.parseInt(move));
-                                checkInput = true;
-                                players.get(index).noOfMoves++;
-                                index = getNextPlayer(index);
-                            }
-                            else{
-                                error.invalidMove();
-                            }
-                            checkWhoWon();
-                        }
-                        board.getLegalMovesList().clear();
-                        checkInput = false;
+                        movePosition(checkInput);
                         break;
                     case 2:
-                        if(players.get(index).getFences() == 0)
-                        {
-                            System.out.println("You have run out of fences! Select a move!");
-                        }
-                        while(checkInput == false && players.get(index).getFences() > 0)
-                        {
-                            System.out.print("Enter the tile numbers and the direction of the wall you want to place: ");
-                            move = inp.nextLine();
-                            int i = 0;
-
-                            if(board.setFence(move, players.get(index), i))
-                            {
-                                boolean validPath = findValidPath();
-                                if(validPath == true)
-                                {
-                                    System.out.println("Fence placed!");
-                                    checkInput = true;
-                                    index = getNextPlayer(index);
-                                }
-                                else
-                                {
-                                    i = 1;
-                                    board.setFence(move, players.get(index), i);
-                                    checkInput = false;
-                                }
-                            }
-                            else
-                            {
-                                error.invalidMove();
-                            }
-                        }
-                        checkInput = false;
+                        placeFence(checkInput);
                         break;
                     case 3:
                         isGameDone = true;
                         break;
                     default:
-                        players.get(index).invalidMove();
+                        players.get(indexOfPlayer).invalidMove();
                         break;
                 }
                 if(isGameDone == true)
                 {
                     break;
                 }
+                System.out.println();
                 board.printBoardState();
                 stats();
-                }
-                System.out.print("Do you want to play another round? (Y/N):  ");
-                ch = inp.next().charAt(0);
+            }
+            restore();
+            System.out.print("Do you want to play another round? (Y/N):  ");
+            ch = inp.next().charAt(0);
         }while(Character.toLowerCase(ch)=='y');
     }
 
@@ -239,15 +189,12 @@ public class Quoridor extends Games<QuoridorPlayer>{
                 int i = (current - 1)/board.getRows();
                 int j = (current - 1)%board.getCols();
 
-                //p.playerPosition.setRow(i);
-                //.playerPosition.setColumn(j);
                 board.getLegalMovesList().clear();
                 board.legalMoves(i, j);
                 List<Integer> l = board.getLegalMovesList();
 
                 if(p.winPos.getRow() == i)
                 {
-                    //p.playerPosition.copy(originalPos);
                     count++;
                     break;
                 }
@@ -257,21 +204,17 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     if(!visited.contains(next))
                     {
                         visited.add(next);
-                        //board.makeMove(p, next);
                         queue.offer(next);
                     }
                 }
             }
-            //p.playerPosition.copy(originalPos);
         }
         board.getLegalMovesList().clear();
-        System.out.print(count);
         if(count == players.size())
         {
-            //System.out.println("Valid Path!");
             return true;
         }
-        System.out.println("No Valid Path! Illegal move!");
+        error.invalidPath();
         return false;
     }
     
@@ -306,6 +249,71 @@ public class Quoridor extends Games<QuoridorPlayer>{
         }
     }
 
+    public void movePosition(boolean checkInput){
+        String move = "";
+        int[] currPos = getCurrentPosition(players.get(indexOfPlayer));
+        board.legalMoves(currPos[0], currPos[1]);
+        board.edgeCaseMoves(currPos[0], currPos[1]);
+        while(!checkInput)
+        {
+            printLegalMoves();
+            System.out.print("Enter your move: ");
+            move = inp.nextLine();
+            try {
+                int moveNum = Integer.parseInt(move);
+
+                if (board.getLegalMovesList().contains(moveNum)) {
+                    board.makeMove(players.get(indexOfPlayer), moveNum);
+                    checkInput = true;
+                    players.get(indexOfPlayer).noOfMoves++;
+                    indexOfPlayer = getNextPlayer(indexOfPlayer);
+                } else {
+                    error.invalidMove();
+                }
+            } catch (NumberFormatException e) {
+                error.invalidTypeInput("legal move from the list provided ");
+            }
+            checkWhoWon();
+        }
+        board.getLegalMovesList().clear();
+        checkInput = false;
+    }
+
+    public void placeFence(boolean checkInput){
+        String move;
+        if(players.get(indexOfPlayer).getFences() == 0)
+        {
+            System.out.println("You have run out of fences! Select a move!");
+        }
+        while(checkInput == false && players.get(indexOfPlayer).getFences() > 0)
+        {
+            System.out.print("Enter the tile numbers and the direction of the wall you want to place: ");
+            move = inp.nextLine();
+            int i = 0;
+
+            if(board.setFence(move, players.get(indexOfPlayer), i))
+            {
+                boolean validPath = findValidPath();
+                if(validPath == true)
+                {
+                    System.out.println("Fence placed!");
+                    checkInput = true;
+                    indexOfPlayer = getNextPlayer(indexOfPlayer);
+                }
+                else
+                {
+                    i = 1;
+                    board.setFence(move, players.get(indexOfPlayer), i);
+                    checkInput = false;
+                }
+            }
+            else
+            {
+                error.invalidMove();
+            }
+        }
+        checkInput = false;
+    }
     /**
      * To display the stats of the game after every move made
      * @param No parameters
@@ -326,8 +334,8 @@ public class Quoridor extends Games<QuoridorPlayer>{
             {
                 isGameDone = true;
                 board.printBoardState();
-                restore();
-                System.out.println(player.getName() + " has won the game with "+player.noOfMoves+"!");
+                System.out.println(player.getName() + " has won the game with " + player.noOfMoves + " moves !");
+                System.out.println();
                 break;
             }
         }

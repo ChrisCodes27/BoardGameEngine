@@ -52,10 +52,13 @@ public abstract class Board implements BoardFunctions{
    
    public boolean setDimensions(String size)
    {
-      if(size.matches("([2-9]+)[x]([2-9]+)")) //Uses Regex Expression to assure that the input is of "nxm" form
+      // Uses Regex Expression to assure that the input is of "nxm" form
+      if(size.matches("([2-9]+)[x]([2-9]+)"))
       {
-         String[] x = size.split("x"); 
-         numOfRows = Integer.parseInt(x[0]); //Extracting the rows and columns from the input
+         String[] x = size.split("x");
+
+         // Extracting the rows and columns from the input
+         numOfRows = Integer.parseInt(x[0]);
          numOfCols = Integer.parseInt(x[1]);
          return true;
       }

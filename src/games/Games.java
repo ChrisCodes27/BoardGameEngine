@@ -23,6 +23,7 @@ public abstract class Games<T extends Player> implements Instructions{
     public colour c = new colour();
     Scanner inp = new Scanner(System.in);
     public boolean isGameDone = false;
+    public int indexOfPlayer;
 
     public Games(int n)
     {
@@ -45,18 +46,18 @@ public abstract class Games<T extends Player> implements Instructions{
         String temp;
         for(T player: players)
         {
-            System.out.println("Player "+(i+1)+", enter your username"); // To iterate through the list of players and get their names
+            System.out.print("Player "+(i+1)+", Enter your username:    "); // To iterate through the list of players and get their names
             temp = inp.nextLine();
             player.setName(temp);
             i++;
         }
     }
 
-    public int getNextPlayer(int index)
+    public int getNextPlayer(int indexOfPlayer)
     {
-        if(index + 1 < players.size())
+        if(indexOfPlayer + 1 < players.size())
         {
-            return index + 1;
+            return indexOfPlayer + 1;
         }
         else{
             return 0;
