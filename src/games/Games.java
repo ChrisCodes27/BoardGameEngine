@@ -52,6 +52,17 @@ public abstract class Games<T extends Player> implements Instructions{
         }
     }
 
+    public int getNextPlayer(int index)
+    {
+        if(index + 1 < players.size())
+        {
+            return index + 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
     /**
      * To restore the variables of Games class if the user decides to play another round
      * @param -
@@ -67,5 +78,7 @@ public abstract class Games<T extends Player> implements Instructions{
     public abstract void startGame();
 
     public abstract void checkWhoWon();
+
+    public abstract void stats();
 
 }

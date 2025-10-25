@@ -33,12 +33,16 @@ public class GameStarter{
         System.out.println("    3. Quoridor");
         System.out.println("    4. Quit Game");
         System.out.print("Enter Your Choice (1-4):  ");
-        try{
-            choice = inp.nextInt();}
-        catch (InputMismatchException e) {
+        try
+        {
+            choice = inp.nextInt();
+            System.out.println();
+        }
+        catch (InputMismatchException e)
+        {
             error.invalidMenuInput();
             inp.nextLine();
-            }
+        }
 
         switch(choice)
         {
@@ -51,11 +55,7 @@ public class GameStarter{
                 d.startGame();
                 break;
             case 3:
-                int numPlayers;
-                System.out.println("Welcome to the Quoridor Game!");
-                System.out.println("Please choose either 2 or 4 players!");
-                numPlayers = inp.nextInt();
-                Quoridor q = new Quoridor(numPlayers); //Quoridor
+                Quoridor q = new Quoridor(); //Quoridor
                 q.startGame();
                 break;
             case 4:

@@ -23,16 +23,9 @@ public class QuoridorPlayer extends Player{
         this.noOfMoves=0;
     }
 
-    public void setPlayerFences(int n)
+    public void setPlayerFences()
     {
-        if (n == 2)
-        {
-            fences = 10;
-        }
-        else if (n == 4)
-        {
-            fences = 5;
-        }
+        fences = 3;
     }
 
     public void decreaseFences()
@@ -44,6 +37,12 @@ public class QuoridorPlayer extends Player{
     {
         return fences;
     }
+
+    public void restore()
+    {
+        setPlayerFences();
+    }
+
 
     /**
      * to get the input from the user which contains value of the tile that want to move

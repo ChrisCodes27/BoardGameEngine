@@ -194,16 +194,21 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
      * @param No parameters
      * @return void function
      */
+    @Override
     public void stats()
     {
         System.out.println();
         board.printBoardState();
+        System.out.println(" -----------------------------------------------------------------");
+        System.out.print("|"+ "\033[1;31;47m");
+        for(DotsAndBoxesPlayer player: players)
+        {
+            System.out.print(player.getName()+"'s boxes: "+player.getNumOfBoxes());
+            System.out.print("      ");
+        }
+        System.out.print("       Total boxes :" + board.getTotalBoxes() +"          \033[0m"+"|");
         System.out.println();
-        System.out.println(" -------------------------------------------------------------");
-        System.out.print("|"+ "\033[1;31;47m"+players.get(0).getName()+"'s boxes: "+players.get(0).getNumOfBoxes());
-        System.out.print("      "+ players.get(1).getName()+"'s boxes: "+players.get(1).getNumOfBoxes());
-        System.out.println("       Total boxes :" + board.getTotalBoxes() +"          \033[0m"+"|");
-        System.out.println(" -------------------------------------------------------------");
+        System.out.println(" ------------------------------------------------------------------");
     }
 
     /**

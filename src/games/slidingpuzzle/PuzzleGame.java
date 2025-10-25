@@ -116,6 +116,18 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
             inp.nextLine();
         }while(Character.toLowerCase(ch)=='y');
     }
+
+    @Override
+    public void checkWhoWon()
+    {
+        
+    }
+
+    @Override
+    public void stats()
+    {
+        
+    }
     
     /**
      * to display the instructions of the game to the user
