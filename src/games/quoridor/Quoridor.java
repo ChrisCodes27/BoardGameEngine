@@ -71,7 +71,7 @@ public class Quoridor extends Games<QuoridorPlayer> {
             // Initializing the board for the game with the size
             board.dotsBoard = new BoxTile[board.getRows()][board.getCols()];
             board.initializeBoard();
-            displayInstructions();
+            instruction.displayQuoridorInstructions();
             setPlayerPosition();
             System.out.println();
             board.printBoardState();

@@ -54,10 +54,10 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
         boolean checkInput = false;
 
         System.out.println("Hello! Welcome to the Dots and Boxes game!");
-        setPlayerCount(2);
+        setPlayerCount(players.size());
         setPlayerName();
         assignColour();
-        displayInstructions();
+        instruction.displayDotsAndBoxesInstructions();
 
         do{
             System.out.println();
@@ -76,35 +76,25 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
             board.printBoardState();
             while (isGameDone == false) //If the game has slots with no boxes claimed, the game must continue
             {
-                for(DotsAndBoxesPlayer player: players) //iterating through the list of players
+                //checking if the current player in the iteration can make another move
+                players.get(indexOfPlayer).move();
+                switch(players.get(indexOfPlayer).choice.toUpperCase())
                 {
-                    while (player.isMoveValid == true && isGameDone == false) { //checking if the current player in the iteration can make another move
-                        //player.invalidMove();
-                        player.move();
-                        switch(player.choice.toUpperCase())
+                    case "QUIT":   //if the player wants to quit at any point during the game
+                        isGameDone = true;
+                        break;
+                    default:     
+                        players.get(indexOfPlayer).isMoveValid = board.makeMove(players.get(indexOfPlayer));
+                        if(players.get(indexOfPlayer).isMoveValid == true)
                         {
-                            case "QUIT":   //if the player wants to quit at any point during the game
-                                isGameDone = true;
-                                break;
-                            default:     
-                                player.isMoveValid = board.makeMove(player);
-                                if(player.isMoveValid == true)
-                                {
-                                    checkWhoWon(); //if the player has another move (the player has claimed a box), check if the game is done
-                                }
-                                stats(); //to display the stats of the game after every move
-                                break;
+                            checkWhoWon(); //if the player has another move (the player has claimed a box), check if the game is done
                         }
-                    }
-                    if(isGameDone == true) //to stop the game from moving on to the next player if the game is done
-                    {
-                        player.isMoveValid = false;
-                        continue;
-                    }
-                    else
-                    {
-                    player.isMoveValid = true;
-                    }
+                        else
+                        {
+                            indexOfPlayer = getNextPlayer(indexOfPlayer);
+                        }
+                        stats(); //to display the stats of the game after every move
+                        break;
                 }
 
                 for(DotsAndBoxesPlayer player: players)
@@ -210,35 +200,4 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
         System.out.println();
         System.out.println(" ------------------------------------------------------------------");
     }
-
-    /**
-     * To display the instructions on how to play the game to the users
-     * @param No parameters
-     * @return void function
-     */
-    @Override
-    public void displayInstructions()
-    {
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-        System.out.println("\033[1;31;47m              DOTS AND BOXES            \033[0m");
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-        System.out.println();
-        System.out.println("GOAL: Complete more boxes than your opponent by drawing lines between dots. Each box completed with the 4th edge earns you one point!");
-        System.out.println();
-        System.out.println("\u001B[31mHOW TO PLAY:\u001B[0m");
-        System.out.println("1. The board is labeled with letters for rows and columns (A, B, C, ...). For example, the coordinates of the first tile in the board is AA.");
-        board.printExampleBoard(); //to print an example of how the dots and board board is
-        System.out.println();
-        System.out.println("Each tile in the board has four different directions - UP (U), DOWN (D), LEFT (L) and RIGHT (R)");   
-        System.out.println("2. To mark an edge of each tile, type the coordinates of the box and the direction in which you want to draw the line.");
-        System.out.println("   Example:");
-        System.out.println("      Enter move: AA L  → draws a vertical line on the left of the tile AA.");
-        System.out.println("      Enter move: AB U  → draws a horizontal line on the top of the tile AB.");
-        System.out.println();
-        System.out.println("3. Completing a box earns you a point and another turn!");
-        System.out.println("4. If you want to quit the game at any point, please type 'QUIT'");
-        System.out.println("When all boxes in the board are filled, the player with the most boxes wins.");
-        System.out.println();
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-    }    
 }

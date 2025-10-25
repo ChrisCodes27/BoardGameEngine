@@ -11,7 +11,6 @@ import board.Tile;
 import player.PuzzlePlayer;
 import board.PuzzleBoard;
 import gameinterfaces.GameFunctions;
-import gameinterfaces.Instructions;
 import games.Games;
 import printerrormessage.printErrorMessage;
 
@@ -61,7 +60,7 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
         inp.nextLine();
         players.get(0).setName(name);
         boolean checkInput = false;
-        displayInstructions();
+        instruction.displaySlidingPuzzleInstructions();
 
         do{
             System.out.println("Welcome "+ players.get(0).getName()+"!");
@@ -106,8 +105,8 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
                 else
                 {
                     players.get(0).noOfMoves++; //increment the number of moves since it is a valid move
-                    System.out.println("Number of Moves: "+ players.get(0).noOfMoves);
-                    players.get(0).win = board.checkBoardState(); //checking if the game is solved after every move
+                    stats();
+                    checkWhoWon();
                 }
             }
             players.get(0).checkWin(); //check if the player has won and display stats
@@ -120,39 +119,12 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
     @Override
     public void checkWhoWon()
     {
-        
+        players.get(0).win = board.checkBoardState(); //checking if the game is solved after every move
     }
 
     @Override
     public void stats()
     {
-        
+        System.out.println("Number of Moves: "+ players.get(0).noOfMoves);
     }
-    
-    /**
-     * to display the instructions of the game to the user
-     * @param No parameters
-     * @return void function
-     */
-    @Override
-    public void displayInstructions()
-    {
-        System.out.println("------------------------------------------");
-        System.out.println("               SLIDING PUZZLE");
-        System.out.println("------------------------------------------");
-        System.out.println();
-        System.out.println("GOAL: Get the numbers in the puzzle in order (starting 1,2,3 ...) from left to right of each row in the board!");
-        //System.out.println(printBoardState());
-        System.out.println("HOW TO PLAY:");
-        System.out.println("1. The board first begins in a shuffled state, you can only move the numbers which are adjacent to the empty tile.");
-        System.out.println("2. To move a tile, type the number present on the tile");
-        System.out.println("   Example:");
-        System.out.println("      Enter move: 5  → Swaps 5 with the empty tile");
-        System.out.println("      Enter move: 3  → Invalid Move");
-        System.out.println();
-        System.out.println();
-        System.out.println("You have completed the puzzle when it is in order!");
-        System.out.println("------------------------------------------");
-    }
-
 }

@@ -10,17 +10,20 @@
 package games;
 
 import gameinterfaces.GameFunctions;
-import gameinterfaces.Instructions;
 import printerrormessage.printErrorMessage;
+import instructions.Instructions;
 import colour.colour;
 import player.Player;
 import java.util.*;
 
-public abstract class Games<T extends Player> implements Instructions{
+public abstract class Games<T extends Player>{
     protected int numOfPlayers;
     protected List<T> players = new ArrayList<>();
+
     public printErrorMessage error = new printErrorMessage();
     public colour c = new colour();
+    public Instructions instruction = new Instructions();
+
     Scanner inp = new Scanner(System.in);
     public boolean isGameDone = false;
     public int indexOfPlayer;
