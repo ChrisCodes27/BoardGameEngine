@@ -19,7 +19,7 @@ public class Piece<T> {
 
     public Piece(T value)
     {
-      this.valueOnTile = value;
+        this.valueOnTile = value;
     }
 
     public T getValueOnTile()

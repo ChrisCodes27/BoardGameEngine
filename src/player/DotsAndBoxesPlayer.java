@@ -47,17 +47,17 @@ public class DotsAndBoxesPlayer extends Player{
         choice = inp.nextLine();
         if(!choice.toUpperCase().equals("QUIT")) //if the user decides to quit during the game
         {
-                trimPlayerChoice(); //to get the coordinates and the edge separate from the input
+            trimPlayerChoice(); //to get the coordinates and the edge separate from the input
         }
     }
-    
+
     /**
      * display message if player inputted an invalid move
      * @param No parameters
      * @return void function
      */
     @Override
-    public void invalidMove() 
+    public void invalidMove()
     {
         System.out.println("That is an invalid move! Select a valid edge");
         isMoveValid = true;
@@ -71,23 +71,23 @@ public class DotsAndBoxesPlayer extends Player{
      */
     public void trimPlayerChoice()
     {
-       choice.trim(); //removing space
-       String[] ch = choice.toUpperCase().split("\\s+"); //split by the space
-       position = new int[2];
-       
-       if(ch.length == 2 && ch[0].trim().length() ==2) //checking if the input is valid
-       {
-         position[0] = ch[0].charAt(0) - 'A';
-         position[1] = ch[0].charAt(1) - 'A';
-         edge = ch[1];
-       }
-       else
-       {
-        invalidMove();
-       }
+        choice.trim(); //removing space
+        String[] ch = choice.toUpperCase().split("\\s+"); //split by the space
+        position = new int[2];
+
+        if(ch.length == 2 && ch[0].trim().length() ==2) //checking if the input is valid
+        {
+            position[0] = ch[0].charAt(0) - 'A';
+            position[1] = ch[0].charAt(1) - 'A';
+            edge = ch[1];
+        }
+        else
+        {
+            invalidMove();
+        }
     }
-    
-     /**
+
+    /**
      * To restore the values of the player for the next round
      * @param No parameters
      * @return void function

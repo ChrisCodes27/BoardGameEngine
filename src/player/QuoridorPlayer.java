@@ -15,7 +15,7 @@ import java.util.*;
 public class QuoridorPlayer extends Player{
     Scanner inp = new Scanner(System.in);
     private int fences;
-    private int winPos;
+    public int winPos;
 
     public QuoridorPlayer()
     {

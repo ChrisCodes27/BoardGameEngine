@@ -32,7 +32,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
     /**
      * Inititalizes the dotsBoard of BoxTile type and sets the value the row and column of each tile along
      * with the initial value of the tile.
-     * @param No parameters, uses the variable dotsBoard
+     * @param
      * @return void function
      */
     @Override
@@ -57,7 +57,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
 
     /**
      * Prints the dots and boxes board after every move of both the players.
-     * @param No parameters
+     * @param
      * @return void function
      */
     @Override 
@@ -149,12 +149,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         }
     }
 
-    /**
-     * Once the user input is received, makeMove() peforms the move according to the edge and direction selected.
-     * @param The player who made the move
-     * @return A boolean value to check if the current player can have the next turn (if box is claimed) or if
-     * an invalid choice is inputted.
-     */
+
     public boolean makeMove(DotsAndBoxesPlayer player)
     {
         int i,j;
@@ -247,11 +242,6 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         }
     }
 
-    /**
-     * Checks if the player has claimed a box after a move is made
-     * @param the player who made the last move
-     * @return returns true if a box is claimed, else false
-     */
     public boolean checkBox(DotsAndBoxesPlayer player)
     { 
         int i,j;
@@ -291,12 +281,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
          return false; //else false
     }
     
-    /**
-     * An example board to show to the players during the instructions at the start of the game. Similar to the
-     * printBoardState() but without the checks to display the claimed edges/boxes.
-     * @param -
-     * @return void function
-     */
+
     @Override
     public void printExampleBoard()
     {

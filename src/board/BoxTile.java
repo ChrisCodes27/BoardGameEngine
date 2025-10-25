@@ -14,9 +14,9 @@ public class BoxTile<T> extends Tile<T>{
     //public Piece<String> piece;
 
     public BoxTile() {
-      up = new Edge(0, "none");
-      down = new Edge(0, "none");
-      left = new Edge(0, "none");
-      right = new Edge(0, "none");
+        up = new Edge(0, "none");
+        down = new Edge(0, "none");
+        left = new Edge(0, "none");
+        right = new Edge(0, "none");
     }
 }

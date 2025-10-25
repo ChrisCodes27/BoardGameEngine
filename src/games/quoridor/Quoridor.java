@@ -156,6 +156,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                 case 0:
                     player.playerPosition = new Tile<>(0, ((board.getCols() - 1)/2));
                     board.playerPiecePosition[0][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+                    player.goalPos
                     break;
                 case 1:
                     player.playerPosition = new Tile<>(board.getRows()-1, ((board.getCols() - 1)/2));

@@ -31,7 +31,7 @@ public abstract class Games<T extends Player> implements Instructions{
 
     public void setPlayerCount(int n)
     {
-       this.numOfPlayers = n;
+        this.numOfPlayers = n;
     }
 
     public int getPlayerCount()
@@ -65,5 +65,5 @@ public abstract class Games<T extends Player> implements Instructions{
     public abstract void initializePlayers(int num);
 
     public abstract void startGame();
-    
+
 }
