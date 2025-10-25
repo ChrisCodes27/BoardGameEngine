@@ -21,6 +21,7 @@ public abstract class Player implements MoveFunctions{
      public String colour;
      public Piece<String> playerPiece;
      public Tile playerPosition;
+     public Tile winPos;
 
      public Player()
      {
