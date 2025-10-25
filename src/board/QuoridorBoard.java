@@ -278,17 +278,13 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
     }
 
 
-    public void legalMoves(QuoridorPlayer player)
+    public void legalMoves(int i, int j)
     {
-        legalMovesList.clear();
-        int i = player.playerPosition.getRow();
-        int j = player.playerPosition.getColumn();
-
         if ( i+1 < getRows())
         {
             if(dotsBoard[i][j].down.getValueOnTile().equals(0))
             {
-                legalMovesList.add((Integer)dotsBoard[i+1][j].piece.getValueOnTile());
+                legalMovesList.add((Integer)dotsBoard[i+1][j].piece.getValueOnTile() );
             }
         }
 
@@ -312,6 +308,56 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
             if(dotsBoard[i][j].left.getValueOnTile().equals(0))
             {
                 legalMovesList.add((Integer)dotsBoard[i][j-1].piece.getValueOnTile());
+            }
+        }
+        //edgeCaseMoves(i, j);
+    }
+
+    public void edgeCaseMoves(int i, int j){
+        int a, b;
+        int tile = (i*getCols()) + j + 1;
+
+        for (int l : legalMovesList)
+        {
+            a = (l - 1)/getRows();
+            b = (l - 1)%getCols();
+
+            if( !playerPiecePosition[a][b].piece.getValueOnTile().equals("0"))
+            {
+
+                legalMoves(a, b);
+
+                if(legalMovesList.contains(l) && legalMovesList.contains(tile)) {
+                    legalMovesList.remove(Integer.valueOf(l));
+                    legalMovesList.remove(Integer.valueOf(tile));
+                }
+                    if (i == a)
+                    {
+                        if( dotsBoard[a][b].left.getValueOnTile().equals(0) && dotsBoard[a][b].right.getValueOnTile().equals(0)) {
+                            if (a - 1 > 0) {
+                                int invalid1 = ((a - 1 ) * getCols()) + b + 1;
+                                legalMovesList.remove(Integer.valueOf(invalid1));
+                            }
+                            if (a + 1 < getCols()) {
+                                int invalid2 = ((a+1) * getCols()) + b + 1;
+                                legalMovesList.remove(Integer.valueOf(invalid2));
+                            }
+                        }
+                    }
+                    if (j == b)
+                    {
+                        if( dotsBoard[a][b].up.getValueOnTile().equals(0) && dotsBoard[a][b].down.getValueOnTile().equals(0)) {
+                            if (b - 1 > 0) {
+                                int invalid1 = (a * getCols()) + b;
+                                legalMovesList.remove(Integer.valueOf(invalid1));
+                            }
+                            if (b + 1 < getCols()) {
+                                int invalid2 = (a * getCols()) + b + 2;
+                                legalMovesList.remove(Integer.valueOf(invalid2));
+                            }
+                        }
+                    }
+                break;
             }
         }
     }

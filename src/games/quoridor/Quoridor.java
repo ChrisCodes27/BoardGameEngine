@@ -76,7 +76,9 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     switch(player.choice)
                     {
                         case 1:
-                            board.legalMoves(player);
+                            int[] currPos = getCurrentPosition(player);
+                            board.legalMoves(currPos[0], currPos[1]);
+                            board.edgeCaseMoves(currPos[0], currPos[1]);
                             while(checkInput == false)
                             {
                                 printLegalMoves();
@@ -90,6 +92,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                                 else{
                                     error.invalidMove();
                                 }
+                                board.getLegalMovesList().clear();
                             }
                             checkInput = false;
                             break;
@@ -136,7 +139,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     board.printBoardState();
                 }
             }
-            System.out.println("Do you want to play another round? (Y/N)");
+            System.out.print("Do you want to play another round? (Y/N):  ");
             ch = inp.next().charAt(0);
             //restore();
         }while(Character.toLowerCase(ch)=='y');
@@ -149,6 +152,14 @@ public class Quoridor extends Games<QuoridorPlayer>{
             player.setPlayerFences(players.size());
             System.out.println(player.getName()+":"+player.getFences());
         }
+    }
+
+    public int[] getCurrentPosition(QuoridorPlayer player)
+    {
+        int[] currPos = new int[2];
+        currPos[0] = player.playerPosition.getRow();
+        currPos[1] = player.playerPosition.getColumn();
+        return currPos;
     }
 
     /**
@@ -214,7 +225,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
         int count = 0;
         for (QuoridorPlayer p: players)
         {
-            Tile originalPos = new Tile<>(p.playerPosition);
+            //Tile originalPos = new Tile<>(p.playerPosition);
             //originalPos.copy(p.playerPosition);
             int start = ((p.playerPosition.getRow())*board.getCols())+p.playerPosition.getColumn() + 1;
             Queue<Integer> queue = new LinkedList<>();
@@ -230,15 +241,15 @@ public class Quoridor extends Games<QuoridorPlayer>{
                 int i = (current - 1)/board.getRows();
                 int j = (current - 1)%board.getCols();
 
-                p.playerPosition.setRow(i);
-                p.playerPosition.setColumn(j);
-
-                board.legalMoves(p);
+                //p.playerPosition.setRow(i);
+                //.playerPosition.setColumn(j);
+                board.getLegalMovesList().clear();
+                board.legalMoves(i, j);
                 List<Integer> l = board.getLegalMovesList();
 
                 if(p.winPos.getRow() == i)
                 {
-                    p.playerPosition.copy(originalPos);
+                    //p.playerPosition.copy(originalPos);
                     count++;
                     break;
                 }
@@ -253,8 +264,9 @@ public class Quoridor extends Games<QuoridorPlayer>{
                     }
                 }
             }
-            p.playerPosition.copy(originalPos);
+            //p.playerPosition.copy(originalPos);
         }
+        board.getLegalMovesList().clear();
         System.out.print(count);
         if(count == players.size())
         {
@@ -345,6 +357,6 @@ public class Quoridor extends Games<QuoridorPlayer>{
         System.out.println();
         System.out.println(" MAY THE BEST PLAYER WIN!");
         System.out.println();
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
+        System.out.println("\u001B[31m--------------------------------------------------------------------------------\u001B[0m");
     }
 }

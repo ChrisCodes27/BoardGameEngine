@@ -54,11 +54,12 @@ public class QuoridorPlayer extends Player{
     public void move()
     {
         System.out.println(getName() + ", Make your move: ");
-        System.out.println("1. Move your position in the board");
-        System.out.println("2. Place a wall");
-        System.out.println("3. Quit");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("    1. Move your position in the board");
+        System.out.println("    2. Place a wall");
+        System.out.println("    3. Quit");
+        System.out.print("Enter your choice (1-3):  ");
         choice = inp.nextInt();
-
     }
 
     /**
@@ -69,7 +70,7 @@ public class QuoridorPlayer extends Player{
     @Override
     public void invalidMove()
     {
-        System.out.println("Thats an invalid choice! Select a valid choice from the menu!");
+        System.out.println("That is an invalid choice! Select a valid choice from the menu!");
         move();
     }
 }

@@ -18,8 +18,7 @@ public class printErrorMessage{
      */
     public void invalidMenuInput()
     {
-        System.out.println("Invalid Input! Select a valid item from the menu.");
-        System.out.println();
+        System.out.println("Invalid Input! Select a valid item from the menu  ");
     }
 
     public void invalidMove()
