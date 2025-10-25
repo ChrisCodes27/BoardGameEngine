@@ -24,16 +24,16 @@ public class QuoridorPlayer extends Player{
         this.noOfMoves=0;
     }
 
-     public void setPlayerFences(int n)
+    public void setPlayerFences(int n)
     {
-       if (n == 2)
-       {
-        fences = 10;
-       }
-       else if (n == 4)
-       {
-        fences = 5;
-       }
+        if (n == 2)
+        {
+            fences = 10;
+        }
+        else if (n == 4)
+        {
+            fences = 5;
+        }
     }
 
     public int getFences()
@@ -53,6 +53,7 @@ public class QuoridorPlayer extends Player{
         System.out.println("1. Move your position in the board");
         System.out.println("2. Place a wall");
         choice = inp.nextInt();
+
     }
 
     /**
