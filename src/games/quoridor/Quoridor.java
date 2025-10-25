@@ -89,6 +89,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                             {
                                 board.makeMove(players.get(index), Integer.parseInt(move));
                                 checkInput = true;
+                                players.get(index).noOfMoves++;
                                 index = getNextPlayer(index);
                             }
                             else{
@@ -326,7 +327,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                 isGameDone = true;
                 board.printBoardState();
                 restore();
-                System.out.println(player.getName() + " has won the game!");
+                System.out.println(player.getName() + " has won the game with "+player.noOfMoves+"!");
                 break;
             }
         }
