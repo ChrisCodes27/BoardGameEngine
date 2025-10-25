@@ -79,6 +79,7 @@ public class Quoridor extends Games<QuoridorPlayer>{
                             board.legalMoves(player);
                             while(checkInput == false)
                             {
+                                printLegalMoves();
                                 System.out.print("Enter your move: ");
                                 move = inp.nextLine();
                                 if(board.getLegalMovesList().contains(Integer.parseInt(move)))
@@ -97,10 +98,23 @@ public class Quoridor extends Games<QuoridorPlayer>{
                             {
                                 System.out.print("Enter the tile numbers and the direction of the wall you want to place: ");
                                 move = inp.nextLine();
-                                if(board.setFence(move, player))
+                                int i = 0;
+
+                                if(board.setFence(move, player, i))
                                 {
-                                    System.out.println("Fence placed!");
-                                    checkInput = true;
+                                    boolean validPath = findValidPath();
+                                    if(validPath == true)
+                                    {
+                                        System.out.println("Fence placed!");
+                                        checkInput = true;
+                                    }
+                                    else
+                                    {
+                                        i = 1;
+                                        board.setFence(move, player, i);
+                                        checkInput = false;
+                                    }
+  
                                 }
                                 else{
                                     error.invalidMove();
@@ -108,9 +122,16 @@ public class Quoridor extends Games<QuoridorPlayer>{
                             }
                             checkInput = false;
                             break;
+                        case 3:
+                            isGameDone = true;
+                            break;
                         default:
                             player.invalidMove();
                             break;
+                    }
+                    if(isGameDone == true)
+                    {
+                        break;
                     }
                     board.printBoardState();
                 }
@@ -156,22 +177,92 @@ public class Quoridor extends Games<QuoridorPlayer>{
                 case 0:
                     player.playerPosition = new Tile<>(0, ((board.getCols() - 1)/2));
                     board.playerPiecePosition[0][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+                    player.winPos = new Tile<>(board.getRows()-1, -1);
                     break;
                 case 1:
                     player.playerPosition = new Tile<>(board.getRows()-1, ((board.getCols() - 1)/2));
-                    board.playerPiecePosition[board.getRows()-1][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+                    board.playerPiecePosition[board.getRows()-1][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());    
+                    player.winPos = new Tile<>(0, -1);               
                     break;
                 case 2:
                     player.playerPosition = new Tile<>(((board.getRows() - 1)/2), 0);
                     board.playerPiecePosition[((board.getRows() - 1)/2)][0].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+                    //player.winPos = new Tile<>();
                     break;
                 case 3:
                     player.playerPosition = new Tile<>(((board.getRows() - 1)/2), (board.getCols() - 1));
                     board.playerPiecePosition[((board.getRows() - 1)/2)][(board.getCols() - 1)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+                    //player.winPos = new Tile<>();
                     break;
             }
             i++;
         }
+    }
+
+    public void printLegalMoves()
+    {
+        System.out.print("These are your legal moves: ");
+        for(int l: board.getLegalMovesList())
+        {
+            System.out.print(l + "  ");
+        }
+        System.out.println();
+    }
+
+    public boolean findValidPath()
+    {
+        int count = 0;
+        for (QuoridorPlayer p: players)
+        {
+            Tile originalPos = new Tile<>(p.playerPosition);
+            //originalPos.copy(p.playerPosition);
+            int start = ((p.playerPosition.getRow())*board.getCols())+p.playerPosition.getColumn() + 1;
+            Queue<Integer> queue = new LinkedList<>();
+            List<Integer> visited = new ArrayList<>();
+
+            queue.offer(start);
+            visited.add(start);
+
+            while(!queue.isEmpty())
+            {
+                int current = queue.poll();
+
+                int i = (current - 1)/board.getRows();
+                int j = (current - 1)%board.getCols();
+
+                p.playerPosition.setRow(i);
+                p.playerPosition.setColumn(j);
+
+                board.legalMoves(p);
+                List<Integer> l = board.getLegalMovesList();
+
+                if(p.winPos.getRow() == i)
+                {
+                    p.playerPosition.copy(originalPos);
+                    count++;
+                    break;
+                }
+
+                for (int next: l)
+                {
+                    if(!visited.contains(next))
+                    {
+                        visited.add(next);
+                        //board.makeMove(p, next);
+                        queue.offer(next);
+                    }
+                }
+            }
+            p.playerPosition.copy(originalPos);
+        }
+        System.out.print(count);
+        if(count == players.size())
+        {
+            //System.out.println("Valid Path!");
+            return true;
+        }
+        System.out.println("No Valid Path! Illegal move!");
+        return false;
     }
 
     /**

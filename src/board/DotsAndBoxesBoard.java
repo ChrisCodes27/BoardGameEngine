@@ -41,7 +41,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
        setTotalBoxes(0);
        for(int i =0;i<getRows();i++){
             for(int j=0;j<getCols();j++){
-                dotsBoard[i][j] = new BoxTile();
+                dotsBoard[i][j] = new BoxTile<String>();
                 dotsBoard[i][j].setRow(i);
                 dotsBoard[i][j].setColumn(j);
                 dotsBoard[i][j].piece = new Piece<>("0");
