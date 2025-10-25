@@ -32,8 +32,21 @@ public class PuzzlePlayer extends Player{
     @Override
     public void move()
     {
-        System.out.println("Enter the tile number that you want to move:");
-        choice = inp.nextInt();
+        boolean flag = true;
+        while(flag)
+        {
+            try
+            {
+            System.out.println("Enter the tile number that you want to move:");
+            choice = inp.nextInt();
+            flag = false;
+            }
+            catch (InputMismatchException e)
+            {
+                inp.nextLine();
+                invalidMove();
+            }
+        }
     }
 
     /**

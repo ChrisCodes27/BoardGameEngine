@@ -65,7 +65,7 @@ public class Quoridor extends Games<QuoridorPlayer> {
             // Initializing the board for the game with the size
             board.dotsBoard = new BoxTile[board.getRows()][board.getCols()];
             board.initializeBoard();
-            displayInstructions();
+            instruction.displayQuoridorInstructions();
             setPlayerPosition();
             System.out.println();
             board.printBoardState();
@@ -339,38 +339,5 @@ public class Quoridor extends Games<QuoridorPlayer> {
                 break;
             }
         }
-    }
-
-    @Override
-    public void displayInstructions()
-    {
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-        System.out.println("\033[1;31;47m              QUORIDOR            \033[0m");
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-        System.out.println();
-        System.out.println("GOAL: Reach the opposite side of the board before your opponent! Each player moves their pawn across the 9x9 grid while strategically placing walls to block the other player’s path.");
-        System.out.println();
-        System.out.println("\u001B[31mHOW TO PLAY:\u001B[0m");
-        System.out.println();
-        System.out.println("1. The board is labeled with numbers from 1 to 81, representing each tile position.");
-        board.printBoardExample();
-        System.out.println("2. On your turn, you are given two options:");
-        System.out.println("   +> Make Your Move : Move your pawn to a valid adjacent tile by entering its tile number.");
-        System.out.println("     Example:");
-        System.out.println("        These are your legal moves: 14  6  4 ");
-        System.out.println("        Enter your move: 14  moves your pawn to tile 46.");
-        System.out.println();
-        System.out.println("   +> Place a wall: You may place a wall between two adjacent tiles to block your opponent’s path.");
-        System.out.println("     Walls can be placed horizontally or vertically, using the direction 'U' (up) or 'D' (down).");
-        System.out.println("     Example:");
-        System.out.println("        Enter move: 45 46 U  → places a horizontal wall above tiles 45 and 46.");
-        System.out.println("        Enter move: 1 10 D   → places a vertical wall below tiles 1 and 10.");
-        System.out.println();
-        System.out.println("3. An option to quit will always be present during the players move.");
-        System.out.println("4. You will not be allowed to completely block your opponents path towards the goal, just enough to mildly irritate them.");
-        System.out.println();
-        System.out.println(" MAY THE BEST PLAYER WIN!");
-        System.out.println();
-        System.out.println("\u001B[31m--------------------------------------------------------------------------------\u001B[0m");
     }
 }
