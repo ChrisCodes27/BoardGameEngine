@@ -183,27 +183,33 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
             error.invalidTypeInput("position/edge (eg. AA U)");
             return true;
         }
+
         else {
             //A switch case according to which direction (U, D, L, R) the user inputs
             switch(player.edge)
             {
                 case "U":
-                    if(dotsBoard[i][j].up.getValueOnTile().equals(1)) //If the edge of that tile has already been selected
+                    // If the edge of that tile has already been selected
+                    if(dotsBoard[i][j].up.getValueOnTile().equals(1))
                     {
                         System.out.println("This edge has already been placed!");
                         return true;
                     }
                     else{
-                    dotsBoard[i][j].up.setValueOnTile(1); //if it has not, set the value of the edge to 1
-                    dotsBoard[i][j].up.edgeColour = player.colour;
-                    if(i-1>=0) //Since there are shared edges in between tiles, will have to update to 1 for those tiles as well.
-                        {dotsBoard[i-1][j].down.setValueOnTile(1);
-                         dotsBoard[i-1][j].down.edgeColour = player.colour;
+                        //if it has not, set the value of the edge to 1
+                        dotsBoard[i][j].up.setValueOnTile(1);
+                        dotsBoard[i][j].up.edgeColour = player.colour;
+
+                        // Since there are shared edges in between tiles, will have to update to 1 for those tiles as well.
+                        if(i-1>=0)
+                            {dotsBoard[i-1][j].down.setValueOnTile(1);
+                             dotsBoard[i-1][j].down.edgeColour = player.colour;
+                            }
                         }
-                    }
-                    break;
+                        break;
                 case "D":
-                    if(dotsBoard[i][j].down.getValueOnTile().equals(1)) //down edge, checks shared up edge as well
+                    // Down edge, checks shared up edge as well
+                    if(dotsBoard[i][j].down.getValueOnTile().equals(1))
                     {
                         System.out.println("This edge has already been placed!");
                         return true;
@@ -217,51 +223,58 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
                     }
                     }
                     break;
+
                 case "L":
-                    if(dotsBoard[i][j].left.getValueOnTile().equals(1)) //left edge, checks right shared edge as well
-                    {
+                    // Left edge, checks right shared edge as well
+                    if(dotsBoard[i][j].left.getValueOnTile().equals(1)) {
                         System.out.println("This edge has already been placed!");
                         return true;
                     }
                     else{
-                    dotsBoard[i][j].left.setValueOnTile(1);
-                    dotsBoard[i][j].left.edgeColour = player.colour;
-                    if(j-1>=0)
-                        {dotsBoard[i][j-1].right.setValueOnTile(1);
-                         dotsBoard[i][j-1].right.edgeColour = player.colour;
+                        dotsBoard[i][j].left.setValueOnTile(1);
+                        dotsBoard[i][j].left.edgeColour = player.colour;
+                        if(j-1>=0)
+                            {dotsBoard[i][j-1].right.setValueOnTile(1);
+                             dotsBoard[i][j-1].right.edgeColour = player.colour;
+                            }
+                    }
+                    break;
+
+                case "R":
+                    // Right edge, checks shared left edge as well
+                    if(dotsBoard[i][j].right.getValueOnTile().equals(1))
+                    {
+                        System.out.println("This edge has already been placed!");
+                        return true;
+                    }
+
+                    else{
+                        dotsBoard[i][j].right.setValueOnTile(1);
+                        dotsBoard[i][j].right.edgeColour = player.colour;
+                        if(j+1<getCols()) {
+                              dotsBoard[i][j+1].left.setValueOnTile(1);
+                              dotsBoard[i][j+1].left.edgeColour = player.colour;
                         }
                     }
                     break;
-                case "R":
-                    if(dotsBoard[i][j].right.getValueOnTile().equals(1)) //right edge, checks shared left edge as well
-                    {
-                        System.out.println("This edge has already been placed!");
-                        return true;
-                    }
-                    else{
-                    dotsBoard[i][j].right.setValueOnTile(1);
-                    dotsBoard[i][j].right.edgeColour = player.colour;
-                    if(j+1<getCols())
-                        {
-                          dotsBoard[i][j+1].left.setValueOnTile(1);
-                          dotsBoard[i][j+1].left.edgeColour = player.colour;
-                    }
-                    }
-                    break;
+
                 default:
-                    error.invalidTypeInput("edge"); //If the user enters an invalid edge, eg. N, S, etc
+                    // If the user enters an invalid edge, eg. N, S, etc
+                    error.invalidTypeInput("edge");
                     return true;
             }
-        player.edge = null;
-        boolean check = checkBox(player); //After a move is made, check if player has claimed a box
-        if (check == true) //If it is true, the player gets another turn
-        {
-           return true;
-        }
-        else
-        {
-           return false;
-        }
+            player.edge = null;
+            // After a move is made, check if player has claimed a box
+            boolean check = checkBox(player);
+
+            // If it is true, the player gets another turn
+            if (check == true) {
+               return true;
+            }
+
+            else {
+               return false;
+            }
         }
     }
 
@@ -278,35 +291,42 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
 
         for(i = getRows()-1; i >=0 ;i--)
         {
-            //check if box is claimed within the current tile as well as in adjacent tiles for each row, keeping the column constant
+            // Check if box is claimed within the current tile as well as in adjacent tiles for each row, keeping the column constant
             if(dotsBoard[i][player.position[1]].piece.getValueOnTile().equals("0") && dotsBoard[i][player.position[1]].up.getValueOnTile().equals(1) && dotsBoard[i][player.position[1]].left.getValueOnTile().equals(1) && dotsBoard[i][player.position[1]].down.getValueOnTile().equals(1)  && dotsBoard[i][player.position[1]].right.getValueOnTile().equals(1))
             {                
                 count++;
                 dotsBoard[i][player.position[1]].piece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour); //Sets the player's initial on the tile if they claimed a box
-                player.setNumOfBoxes(player.getNumOfBoxes()+1); //Incrementing the number of boxes for the current player
-                setTotalBoxes(getTotalBoxes() + 1); //Incrementing the total number of boxes
+
+                // Incrementing the number of boxes for the current player
+                player.setNumOfBoxes(player.getNumOfBoxes()+1);
+
+                // Incrementing the total number of boxes
+                setTotalBoxes(getTotalBoxes() + 1);
 
                 System.out.println(c.endColour+ player.getName()+" claimed "+ count+" box(s)!");
             }
         }
         for(j=getCols()-1;j>=0;j--)
         {
-            //check if box is claimed within the current tile as well as in adjacent tiles for each column, keeping the row constant
+            // Check if box is claimed within the current tile as well as in adjacent tiles for each column, keeping the row constant
             if(dotsBoard[player.position[0]][j].piece.getValueOnTile().equals("0") && dotsBoard[player.position[0]][j].up.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].left.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].down.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].right.getValueOnTile().equals(1))
             {
                 count++;
-                dotsBoard[player.position[0]][j].piece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour);//Sets the player's initial on the tile if they claimed a box
+
+                // Sets the player's initial on the tile if they claimed a box
+                dotsBoard[player.position[0]][j].piece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour);
                 player.setNumOfBoxes(player.getNumOfBoxes()+1);
                 setTotalBoxes(getTotalBoxes() + 1);
 
                 System.out.println(c.endColour+player.getName()+" claimed "+count+ "box(s)!");
             }
         }
-        if (count>0)
-        {
-            return true; //return true if a player claimed ateast 1 box during their current move
+        if (count>0) {
+            // Return true if a player claimed ateast 1 box during their current move
+            return true;
         }
-         return false; //else false
+        // Else false
+        return false;
     }
 
     /**

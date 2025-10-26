@@ -20,20 +20,18 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
 
     public DotsAndBoxes()
     {
-        super(2); //To initialize the dots and boxes player. Passing the value 2 for a two player game.
+        // To initialize the dots and boxes player. Passing the value 2 for a two player game.
+        super(2);
     }
 
     /**
-     * Assigning a colour to each player in the game.
-     * @param No parameters
+     * Assigning a colour to each player in the game
      * @return void function
      */
-    public void assignColour()
-    {
+    public void assignColour() {
         colour c = new colour();
         int i =0;
-        for(DotsAndBoxesPlayer player: players)
-        {
+        for(DotsAndBoxesPlayer player: players) {
             player.colour = c.colours.get(i);
             i++;
         }
@@ -41,7 +39,6 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
 
     /**
      * The starting point of the game
-     * @param No parameters
      * @return void function
      */
     @Override
@@ -67,40 +64,49 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
                 s = inp.next();
                 inp.nextLine();
                 board.setSize(s);
-                checkInput = board.setDimensions(s); //to get the rows and columns from the inputting size of the board
+
+                // To get the rows and columns from the inputting size of the board
+                checkInput = board.setDimensions(s);
             }
             checkInput = false;
-            board.dotsBoard = new BoxTile[board.getRows()][board.getCols()]; //initializing the board for the game with the size
+
+            // Initializing the board for the game with the size
+            board.dotsBoard = new BoxTile[board.getRows()][board.getCols()];
             board.initializeBoard();
             System.out.println();
             board.printBoardState();
-            while (isGameDone == false) //If the game has slots with no boxes claimed, the game must continue
+
+            // If the game has slots with no boxes claimed, the game must continue
+            while (isGameDone == false)
             {
-                //checking if the current player in the iteration can make another move
+                // Checking if the current player in the iteration can make another move
                 players.get(indexOfPlayer).move();
                 switch(players.get(indexOfPlayer).choice.toUpperCase())
                 {
-                    case "QUIT":   //if the player wants to quit at any point during the game
+                    // If the player wants to quit at any point during the game
+                    case "QUIT":
                         isGameDone = true;
                         break;
+
                     default:     
                         players.get(indexOfPlayer).isMoveValid = board.makeMove(players.get(indexOfPlayer));
-                        if(players.get(indexOfPlayer).isMoveValid == true)
-                        {
-                            checkWhoWon(); //if the player has another move (the player has claimed a box), check if the game is done
+                        if(players.get(indexOfPlayer).isMoveValid == true) {
+                            // If the player has another move (the player has claimed a box), check if the game is done
+                            checkWhoWon();
                         }
-                        else
-                        {
+
+                        else {
                             indexOfPlayer = getNextPlayer(indexOfPlayer);
                         }
-                        stats(); //to display the stats of the game after every move
+
+                        // To display the stats of the game after every move
+                        stats();
                         break;
                 }
 
-                for(DotsAndBoxesPlayer player: players)
-                {
-                    if(player.win == true) //checking if a player has won the game if there is no tie
-                    {
+                for(DotsAndBoxesPlayer player: players) {
+                    // Checking if a player has won the game if there is no tie
+                    if(player.win == true) {
                         System.out.println(player.getName()+" has won the game!");
                     }
                 }
@@ -114,15 +120,14 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
 
     /**
      * Initializing the players for the dots and boxes game
-     * @param number of players for the game
+     * @param n of players for the game
      * @return void function
      */
     @Override
     public void initializePlayers(int n)
     {
         int i = 0;
-        while(i < n)
-        {
+        while(i < n) {
           players.add(new DotsAndBoxesPlayer());
           i++;
         }
@@ -130,7 +135,6 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
     
     /**
      * Checking if the game is done
-     * @param No parameters
      * @return void function
      */
     @Override
@@ -139,39 +143,39 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
         int maxNum = 0;
         int i = 0;
         int a = 0;
-        
-        if (board.getTotalBoxes() == (board.getRows()*board.getCols())) //if the total number of boxes is equal to the size of the board (n*m)
-        {
-        for(DotsAndBoxesPlayer player: players)
-        {
-            if (maxNum < player.getNumOfBoxes()) //iterating through each player to see who won
-            {
-                maxNum = player.getNumOfBoxes();
-                i = players.indexOf(player);
-            }
 
-            else if (maxNum == player.getNumOfBoxes() && maxNum !=0) //else there is a tie
+        // If the total number of boxes is equal to the size of the board (n*m)
+        if (board.getTotalBoxes() == (board.getRows()*board.getCols()))
+        {
+            for(DotsAndBoxesPlayer player: players)
             {
-                System.out.println("There is a tie!");
-                a = 1;
+                // Iterating through each player to see who won
+                if (maxNum < player.getNumOfBoxes())
+                {
+                    maxNum = player.getNumOfBoxes();
+                    i = players.indexOf(player);
+                }
+
+                // Else there is a tie
+                else if (maxNum == player.getNumOfBoxes() && maxNum !=0)
+                {
+                    System.out.println("There is a tie!");
+                    a = 1;
+                    isGameDone = true;
+                }
+            }
+            if(a == 0) {
+                players.get(i).win = true;
                 isGameDone = true;
             }
-        }
-        if(a == 0)
-        {
-            players.get(i).win = true;
-            isGameDone = true;
-        }
         }
     }
 
     /**
      * Restoring the values of each player for the next round
-     * @param No parameters
      * @return void function
      */
-    public void restore()
-    {
+    public void restore() {
         isGameDone = false;
         for(DotsAndBoxesPlayer player: players)
         {
@@ -181,7 +185,6 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
 
     /**
      * To display the stats of the game after every move made
-     * @param No parameters
      * @return void function
      */
     @Override

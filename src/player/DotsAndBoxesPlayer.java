@@ -66,30 +66,30 @@ public class DotsAndBoxesPlayer extends Player{
     /**
      * To get the coordinates of the tile and the edge that the user wants to claim. eg. AA U is the input from the player,
      * get the coordinates AA and the edge U.
-     * @param No parameters
      * @return void function
      */
     public void trimPlayerChoice()
     {
-        choice.trim(); //removing space
-        String[] ch = choice.toUpperCase().split("\\s+"); //split by the space
+        // Removing space
+        choice.trim();
+
+        // Split by the space
+        String[] ch = choice.toUpperCase().split("\\s+");
         position = new int[2];
 
-        if(ch.length == 2 && ch[0].trim().length() ==2) //checking if the input is valid
-        {
+        // Checking if the input is valid
+        if(ch.length == 2 && ch[0].trim().length() ==2) {
             position[0] = ch[0].charAt(0) - 'A';
             position[1] = ch[0].charAt(1) - 'A';
             edge = ch[1];
         }
-        else
-        {
+        else {
             invalidMove();
         }
     }
 
     /**
      * To restore the values of the player for the next round
-     * @param No parameters
      * @return void function
      */
     public void restore()

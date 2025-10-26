@@ -19,49 +19,69 @@ import java.util.*;
 public abstract class Games<T extends Player>{
     protected int numOfPlayers;
     protected List<T> players = new ArrayList<>();
-
     public printErrorMessage error = new printErrorMessage();
     public colour c = new colour();
     public Instructions instruction = new Instructions();
-
     Scanner inp = new Scanner(System.in);
     public boolean isGameDone = false;
     public int indexOfPlayer;
 
+    /**
+     * Constructs a Games object and initializes the players.
+     * @param n The number of players participating in the game.
+     */
     public Games(int n)
     {
         initializePlayers(n); //Initializes the players of each type of game. Refers to the implementation in its own class
     }
 
-    public void setPlayerCount(int n)
-    {
+    /**
+     * Sets the total number of players in the game.
+     * @param n The number of players.
+     */
+    public void setPlayerCount(int n) {
         this.numOfPlayers = n;
     }
 
+    /**
+     * Returns the current number of players.
+     * @return The number of players in the game.
+     */
     public int getPlayerCount()
     {
         return numOfPlayers;
     }
 
+    /**
+     * Prompts each player to enter their username and assigns it.
+     * Iterates through the player list and updates their names
+     * Each player class must implement a setName method
+     */
     public void setPlayerName()
     {
         int i = 0;
         String temp;
         for(T player: players)
         {
-            System.out.print("Player "+(i+1)+", Enter your username:    "); // To iterate through the list of players and get their names
+            // To iterate through the list of players and get their names
+            System.out.print("Player "+(i+1)+", Enter your username:    ");
             temp = inp.nextLine();
             player.setName(temp);
             i++;
         }
     }
 
+    /**
+     * Determines the index of the next player in turn order.
+     * @param indexOfPlayer The index of the current player.
+     * @return The index of the next player; or 0 if at the end of the list
+     */
     public int getNextPlayer(int indexOfPlayer)
     {
-        if(indexOfPlayer + 1 < players.size())
-        {
+        if(indexOfPlayer + 1 < players.size()) {
             return indexOfPlayer + 1;
         }
+
         else{
             return 0;
         }
@@ -69,20 +89,34 @@ public abstract class Games<T extends Player>{
 
     /**
      * To restore the variables of Games class if the user decides to play another round
-     * @param -
      * @return void function
      */
-    public void restore()
-    {
+    public void restore() {
         isGameDone = false;
     }
 
+    /**
+     * Abstract method to initialize the players for a specific game.
+     * Each subclass should create and configure its player objects here
+     * @param num The number of players to initialize.
+     */
     public abstract void initializePlayers(int num);
 
+    /**
+     * Abstract method that defines the main game loop or flow.
+     * Each subclass implements the logic for starting and running its game
+     */
     public abstract void startGame();
 
+    /**
+     * Abstract method that checks if any player has met the win conditions.
+     * Should be called after each move or round
+     */
     public abstract void checkWhoWon();
 
+    /**
+     * Abstract method that displays game statistics such as scores or win records.
+     */
     public abstract void stats();
 
 }

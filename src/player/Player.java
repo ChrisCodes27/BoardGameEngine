@@ -22,12 +22,10 @@ public abstract class Player implements MoveFunctions{
      public Piece<String> playerPiece;
      public Tile playerPosition;
      public Tile winPos;
-
      public Player()
      {
           playerPiece = new Piece<String>();
      }
-
      public String getName()
      {
           return name;
@@ -39,20 +37,18 @@ public abstract class Player implements MoveFunctions{
 
      /**
       * Checks if the win variable for the player is true, if it is, proceeds to congratulate the user and displays the number of moves made.
-      * @param
       * @return void function
       */
-     public void checkWin()
-     {
+     public void checkWin() {
           if(win==true){
                System.out.println("Congratulation "+name+"! You have solved the game with "+noOfMoves+" moves!");
                restore();
           }
      }
+
      /**
       * To restore the value of player if the user decides to play another round
-      * @param -
-      * @return -
+      * @return void function
       */
      public void restore()
      {

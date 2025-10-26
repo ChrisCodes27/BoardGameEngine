@@ -15,8 +15,8 @@ public class colour{
     public String endColour = "\u001B[0m";
     public List<String> colours;
     
-    public colour()
-    {
-        colours = Arrays.asList(red, green); //An list of two colours for a two player game
+    public colour() {
+        // An list of two colours for a two player game
+        colours = Arrays.asList(red, green);
     }
 }

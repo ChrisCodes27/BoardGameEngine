@@ -70,8 +70,7 @@ public abstract class Board implements BoardFunctions{
     * Returns the size of the board as a string.
     * @return String — size in "nxm" format.
     */
-   public String getSize()
-   {
+   public String getSize() {
       return size;
    }
 
@@ -92,6 +91,7 @@ public abstract class Board implements BoardFunctions{
          numOfCols = Integer.parseInt(x[1]);
          return true;
       }
+
       else{
          // Handles errors
          System.out.println("Invalid Input! Must be of the form nxm");
