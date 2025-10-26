@@ -291,10 +291,10 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         for(i = getRows()-1; i >=0 ;i--)
         {
             // Check if box is claimed within the current tile as well as in adjacent tiles for each row, keeping the column constant
-            if(dotsBoard[i][player.position[1]].piece.getValueOnTile().equals("0") && dotsBoard[i][player.position[1]].up.getValueOnTile().equals(1) && dotsBoard[i][player.position[1]].left.getValueOnTile().equals(1) && dotsBoard[i][player.position[1]].down.getValueOnTile().equals(1)  && dotsBoard[i][player.position[1]].right.getValueOnTile().equals(1))
+            if(dotsBoard[i][player.position[1]].s_piece.getValueOnTile().equals("0") && dotsBoard[i][player.position[1]].up.getValueOnTile().equals(1) && dotsBoard[i][player.position[1]].left.getValueOnTile().equals(1) && dotsBoard[i][player.position[1]].down.getValueOnTile().equals(1)  && dotsBoard[i][player.position[1]].right.getValueOnTile().equals(1))
             {                
                 count++;
-                dotsBoard[i][player.position[1]].piece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour); //Sets the player's initial on the tile if they claimed a box
+                dotsBoard[i][player.position[1]].s_piece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour); //Sets the player's initial on the tile if they claimed a box
 
                 // Incrementing the number of boxes for the current player
                 player.setNumOfBoxes(player.getNumOfBoxes()+1);
@@ -308,12 +308,12 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         for(j=getCols()-1;j>=0;j--)
         {
             // Check if box is claimed within the current tile as well as in adjacent tiles for each column, keeping the row constant
-            if(dotsBoard[player.position[0]][j].piece.getValueOnTile().equals("0") && dotsBoard[player.position[0]][j].up.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].left.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].down.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].right.getValueOnTile().equals(1))
+            if(dotsBoard[player.position[0]][j].s_piece.getValueOnTile().equals("0") && dotsBoard[player.position[0]][j].up.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].left.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].down.getValueOnTile().equals(1) && dotsBoard[player.position[0]][j].right.getValueOnTile().equals(1))
             {
                 count++;
 
                 // Sets the player's initial on the tile if they claimed a box
-                dotsBoard[player.position[0]][j].piece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour);
+                dotsBoard[player.position[0]][j].s_piece.setValueOnTile(player.colour+player.getName().substring(0,1)+c.endColour);
                 player.setNumOfBoxes(player.getNumOfBoxes()+1);
                 setTotalBoxes(getTotalBoxes() + 1);
 

@@ -146,16 +146,6 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
 
         earlyWin();
         
-        if (board.getTotalBoxes() == (board.getRows()*board.getCols())) //if the total number of boxes is equal to the size of the board (n*m)
-        {
-        for(DotsAndBoxesPlayer player: players)
-        {
-            if (maxNum < player.getNumOfBoxes()) //iterating through each player to see who won
-            {
-                maxNum = player.getNumOfBoxes();
-                i = players.indexOf(player);
-            }
-
         // If the total number of boxes is equal to the size of the board (n*m)
         if (board.getTotalBoxes() == (board.getRows()*board.getCols()))
         {

@@ -396,6 +396,7 @@ public class Quoridor extends Games<QuoridorPlayer> {
                 // Fence placement if valid path exists for both players
                 boolean validPath = findValidPath();
                 if(validPath == true) {
+                    players.get(indexOfPlayer).decreaseFences();
                     System.out.println("Fence placed!");
                     System.out.println();
                     checkInput = true;
@@ -409,10 +410,8 @@ public class Quoridor extends Games<QuoridorPlayer> {
                     checkInput = false;
                 }
             }
-
-            // Handeles exception errors
             else {
-                error.invalidMove();
+                error.fencePlacement();
             }
         }
         checkInput = false;

@@ -77,13 +77,19 @@ public class QuoridorPlayer extends Player{
             System.out.println("    2. Place a wall");
             System.out.println("    3. Quit");
             System.out.print("Enter your choice (1-3):  ");
+            String input = inp.nextLine().trim();
             try {
-                choice = inp.nextInt();
-                flag = false;
-            } catch (InputMismatchException e) {
-
+                choice = Integer.parseInt(input);
+                if(choice < 4 && choice > 0)
+                {
+                    flag = false;
+                }
+                else
+                {
+                    error.invalidMenuInput();
+                }
+            } catch (NumberFormatException e) {
                 // Handles Exception cases
-                inp.nextLine();
                 error.invalidMove();
             }
         }

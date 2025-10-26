@@ -55,19 +55,31 @@ public abstract class Games<T extends Player>{
     /**
      * Prompts each player to enter their username and assigns it.
      * Iterates through the player list and updates their names
-     * Each player class must implement a setName method
      */
     public void setPlayerName()
     {
         int i = 0;
         String temp;
+        boolean flagName;
+        // To iterate through the list of players and get their names
         for(T player: players)
         {
-            // To iterate through the list of players and get their names
-            System.out.print("Player "+(i+1)+", Enter your username:    ");
-            temp = inp.nextLine();
-            player.setName(temp);
-            i++;
+            flagName = true;
+            while (flagName)
+            {
+                System.out.print("Player "+(i+1)+", Enter your username:    ");
+                temp = inp.nextLine();
+                if(!temp.trim().equals(""))
+                {
+                    player.setName(temp);
+                    flagName = false;
+                    i++;
+                }
+                else
+                {
+                    error.invalidName();
+                }
+            }
         }
     }
 
