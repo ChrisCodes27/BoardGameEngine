@@ -16,8 +16,7 @@ public class Instructions
     QuoridorBoard q = new QuoridorBoard();
 
     /**
-     * to display the instructions of the Sliding Puzzle game to the user
-     * @param No parameters
+     * To display the instructions of the Sliding Puzzle game to the user
      * @return void function
      */
     public void displaySlidingPuzzleInstructions()
@@ -41,7 +40,6 @@ public class Instructions
 
     /**
      * To display the instructions on how to play the dots and boxes game to the users
-     * @param No parameters
      * @return void function
      */
     public void displayDotsAndBoxesInstructions()
@@ -70,6 +68,10 @@ public class Instructions
 
     }
 
+    /**
+     * To display the instructions on how to play the Quoridor game to the users
+     * @return void function
+     */
     public void displayQuoridorInstructions()
     {
         System.out.println("\u001B[31m------------------------------------------\u001B[0m");

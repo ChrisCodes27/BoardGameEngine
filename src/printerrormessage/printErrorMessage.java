@@ -12,8 +12,7 @@ import java.util.*;
 public class printErrorMessage{
 
     /**
-     * displays an error message if the menu item selected is not valid
-     * @param No parameters
+     * Displays an error message if the menu item selected is not valid
      * @return void function
      */
     public void invalidMenuInput()
@@ -21,6 +20,10 @@ public class printErrorMessage{
         System.out.println("Invalid Input! Select a valid item from the menu  ");
     }
 
+    /**
+     * Displays an error message if the move selected is not valid
+     * @return void function
+     */
     public void invalidMove()
     {
         System.out.println("Invalid move! Select a valid move!");
@@ -28,8 +31,7 @@ public class printErrorMessage{
     }
 
     /**
-     * displays an error message if the type of input is not valid (for moves, etc)
-     * @param No parameters
+     * Displays an error message if the type of input is not valid (for moves, etc)
      * @return void function
      */
     public void invalidTypeInput(String type)
@@ -38,10 +40,18 @@ public class printErrorMessage{
         System.out.println();
     }
 
+    /**
+     * Displays an error message if the fence placed is not valid
+     * @return void function
+     */
     public void fencePlaced(){
         System.out.println("A fence has already been placed here!");;
     }
 
+    /**
+     * Displays an error message if the fence placed blocks opponent
+     * @return void function
+     */
     public void invalidPath(){
         System.out.println("No Valid Path Available For your Opponent! Illegal move!");
     }

@@ -8,7 +8,6 @@ import printerrormessage.printErrorMessage;
 
 public class QuoridorBoard extends DotsAndBoxesBoard{
 
-    //public BoxTile[][] quoridorBoard;
     public Tile[][] playerPiecePosition;
     private List<Integer> legalMovesList;
     printErrorMessage error = new printErrorMessage();
