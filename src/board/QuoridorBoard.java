@@ -14,7 +14,6 @@ import player.QuoridorPlayer;
 import colour.colour;
 import printerrormessage.printErrorMessage;
 
-@SuppressWarnings("unchecked")
 public class QuoridorBoard extends DotsAndBoxesBoard{
 
     public Tile[][] playerPiecePosition;
@@ -48,10 +47,10 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         }
         for(int i =0;i<getRows();i++){
             for(int j=0;j<getCols();j++){
-                dotsBoard[i][j] = new BoxTile<Integer>();
+                dotsBoard[i][j] = new BoxTile();
                 dotsBoard[i][j].setRow(i);
                 dotsBoard[i][j].setColumn(j);
-                dotsBoard[i][j].piece = new Piece<>(arr[k]);
+                dotsBoard[i][j].i_piece = new Piece<>(arr[k]);
                 k++;
             }
         }
@@ -66,8 +65,8 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         playerPiecePosition = new Tile[getRows()][getCols()];
         for(int i =0;i<getRows();i++){
             for(int j=0;j<getCols();j++){
-                playerPiecePosition[i][j] = new Tile<String>();
-                playerPiecePosition[i][j].piece = new Piece<>("0"); //Assigning all zeros first
+                playerPiecePosition[i][j] = new Tile();
+                playerPiecePosition[i][j].s_piece = new Piece<>("0"); //Assigning all zeros first
             }
         }
     }
@@ -140,14 +139,14 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     row = (i-1)/2;
                     col = (j-1)/2;
 
-                    if (i == 1 && !playerPiecePosition[row][col].piece.getValueOnTile().equals("0")) //If a player is on the first row and is on the current tile
-                    {System.out.print("  "+ playerPiecePosition[row][col].piece.getValueOnTile()+" ");}
-                    else if (!playerPiecePosition[row][col].piece.getValueOnTile().equals("0")) //if a player is on the current tile
-                    {System.out.print("  "+ playerPiecePosition[row][col].piece.getValueOnTile()+" ");}
+                    if (i == 1 && !playerPiecePosition[row][col].s_piece.getValueOnTile().equals("0")) //If a player is on the first row and is on the current tile
+                    {System.out.print("  "+ playerPiecePosition[row][col].s_piece.getValueOnTile()+" ");}
+                    else if (!playerPiecePosition[row][col].s_piece.getValueOnTile().equals("0")) //if a player is on the current tile
+                    {System.out.print("  "+ playerPiecePosition[row][col].s_piece.getValueOnTile()+" ");}
                     else if (i==1)
-                    {System.out.print("  "+ dotsBoard[row][col].piece.getValueOnTile()+" ");}
+                    {System.out.print("  "+ dotsBoard[row][col].i_piece.getValueOnTile()+" ");}
                     else
-                    {System.out.print(" "+ dotsBoard[row][col].piece.getValueOnTile()+" ");}
+                    {System.out.print(" "+ dotsBoard[row][col].i_piece.getValueOnTile()+" ");}
                 }
             }
             System.out.println();
@@ -164,13 +163,13 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         int i = (move - 1)/getRows();
         int j = (move - 1)%getCols();
 
-        playerPiecePosition[player.playerPosition.getRow()][player.playerPosition.getColumn()].piece.setValueOnTile("0");
+        playerPiecePosition[player.playerPosition.getRow()][player.playerPosition.getColumn()].s_piece.setValueOnTile("0");
 
-        if((Integer)dotsBoard[i][j].piece.getValueOnTile() == move)
+        if(dotsBoard[i][j].i_piece.getValueOnTile() == move)
         {
             player.playerPosition.setRow(i);
             player.playerPosition.setColumn(j);
-            playerPiecePosition[i][j].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+            playerPiecePosition[i][j].s_piece.setValueOnTile(player.playerPiece.getValueOnTile());
         }
     }
 
@@ -204,7 +203,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     switch(edge)
                     {
                         case "U":
-                            if(dotsBoard[i1][j1].up.getValueOnTile().equals(i) && dotsBoard[i2][j2].up.getValueOnTile().equals(i))
+                            if(dotsBoard[i1][j1].up.getValueOnTile().equals(i) && dotsBoard[i2][j2].up.getValueOnTile().equals(i)  && i1 - 1 > 0 && i2 - 1 > 0)
                             {
                                 dotsBoard[i1][j1].up.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2].up.setValueOnTile(~i & 1);
@@ -225,7 +224,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                             }
                             break;
                         case "D":
-                            if(dotsBoard[i1][j1].down.getValueOnTile().equals(i) && dotsBoard[i2][j2].down.getValueOnTile().equals(i))
+                            if(dotsBoard[i1][j1].down.getValueOnTile().equals(i) && dotsBoard[i2][j2].down.getValueOnTile().equals(i) && i1 + 1 < getRows() && i2 + 1 < getRows())
                             {
                                 dotsBoard[i1][j1].down.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2].down.setValueOnTile(~i & 1);
@@ -255,7 +254,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     switch(edge)
                     {
                         case "L":
-                            if(dotsBoard[i1][j1].left.getValueOnTile().equals(i) && dotsBoard[i2][j2].left.getValueOnTile().equals(i))
+                            if(dotsBoard[i1][j1].left.getValueOnTile().equals(i) && dotsBoard[i2][j2].left.getValueOnTile().equals(i)  && j1 - 1 > 0 && j2 - 1 > 0)
                             {
                                 dotsBoard[i1][j1].left.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2].left.setValueOnTile(~i & 1);
@@ -273,7 +272,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                             }
                             break;
                         case "R":
-                            if(dotsBoard[i1][j1].right.getValueOnTile().equals(i) && dotsBoard[i2][j2].right.getValueOnTile().equals(i))
+                            if(dotsBoard[i1][j1].right.getValueOnTile().equals(i) && dotsBoard[i2][j2].right.getValueOnTile().equals(i)  && j1 + 1 < getCols() && j2 + 1 < getCols())
                             {
                                 dotsBoard[i1][j1].right.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2].right.setValueOnTile(~i & 1);
@@ -301,14 +300,16 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     return false;
                 }
             }
-            else{
-                return false;
-            }
         }
         else
         {
             return false;
         }
+        // else
+        // {
+        //     return false;
+        // }
+        return false; //check
     }
 
     /**
@@ -323,7 +324,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         {
             if(dotsBoard[i][j].down.getValueOnTile().equals(0)) //checking if there is an edge blocking a valid move of the player
             {
-                legalMovesList.add((Integer)dotsBoard[i+1][j].piece.getValueOnTile() ); //if not, add to legal moves list
+                legalMovesList.add(dotsBoard[i+1][j].i_piece.getValueOnTile() ); //if not, add to legal moves list
             }
         }
 
@@ -331,7 +332,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         {
             if(dotsBoard[i][j].up.getValueOnTile().equals(0))
             {
-                legalMovesList.add((Integer)dotsBoard[i-1][j].piece.getValueOnTile());
+                legalMovesList.add(dotsBoard[i-1][j].i_piece.getValueOnTile());
             }
         }
 
@@ -339,14 +340,14 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         {
             if(dotsBoard[i][j].right.getValueOnTile().equals(0))
             {
-                legalMovesList.add((Integer)dotsBoard[i][j+1].piece.getValueOnTile());
+                legalMovesList.add(dotsBoard[i][j+1].i_piece.getValueOnTile());
             }
         }
         if ( j-1 >= 0)
         {
             if(dotsBoard[i][j].left.getValueOnTile().equals(0))
             {
-                legalMovesList.add((Integer)dotsBoard[i][j-1].piece.getValueOnTile());
+                legalMovesList.add(dotsBoard[i][j-1].i_piece.getValueOnTile());
             }
         }
     }
@@ -367,7 +368,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
             b = (l - 1)%getCols();
 
             //If there is a player adjacent to the current player (by checking the playerPositionBoard)
-            if( !playerPiecePosition[a][b].piece.getValueOnTile().equals("0"))
+            if( !playerPiecePosition[a][b].s_piece.getValueOnTile().equals("0"))
             {
                 legalMoves(a, b); //getting the legal moves of the other player
 

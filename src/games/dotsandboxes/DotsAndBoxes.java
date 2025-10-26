@@ -139,6 +139,8 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
         int maxNum = 0;
         int i = 0;
         int a = 0;
+
+        earlyWin();
         
         if (board.getTotalBoxes() == (board.getRows()*board.getCols())) //if the total number of boxes is equal to the size of the board (n*m)
         {
@@ -163,6 +165,24 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
             isGameDone = true;
         }
         }
+    }
+
+     /**
+     * To stop the game if a player has claimed more than half of the boxes that can be made within the board
+     * @return void function
+     */
+    public void earlyWin()
+    {
+        for(DotsAndBoxesPlayer player: players)
+        {
+            if (player.getNumOfBoxes() > (board.getRows()*board.getCols())/2)
+            {
+                players.get(players.indexOf(player)).win = true;
+                isGameDone = true;
+                break;
+            }
+        }
+
     }
 
     /**

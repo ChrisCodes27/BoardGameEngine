@@ -13,7 +13,6 @@ import board.*;
 import player.QuoridorPlayer;
 import games.Games;
 
-@SuppressWarnings("unchecked")
 public class Quoridor extends Games<QuoridorPlayer> {
     Scanner inp = new Scanner(System.in);
     QuoridorBoard board = new QuoridorBoard();
@@ -190,20 +189,20 @@ public class Quoridor extends Games<QuoridorPlayer> {
             {
                 case 0:
                     // Initializing Player 1 position to start at the top middle cell
-                    player.playerPosition = new Tile<>(0, ((board.getCols() - 1)/2));
-                    board.playerPiecePosition[0][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+                    player.playerPosition = new Tile(0, ((board.getCols() - 1)/2));
+                    board.playerPiecePosition[0][((board.getCols() - 1)/2)].s_piece.setValueOnTile(player.playerPiece.getValueOnTile());
 
                     // Assigns Player 1's winning position
-                    player.winPos = new Tile<>(board.getRows()-1, -1);
+                    player.winPos = new Tile(board.getRows()-1, -1);
                     break;
 
                 case 1:
                     // Initializing Player 2 position to start at the botton middle cell
-                    player.playerPosition = new Tile<>(board.getRows()-1, ((board.getCols() - 1)/2));
-                    board.playerPiecePosition[board.getRows()-1][((board.getCols() - 1)/2)].piece.setValueOnTile(player.playerPiece.getValueOnTile());
+                    player.playerPosition = new Tile(board.getRows()-1, ((board.getCols() - 1)/2));
+                    board.playerPiecePosition[board.getRows()-1][((board.getCols() - 1)/2)].s_piece.setValueOnTile(player.playerPiece.getValueOnTile());
 
                     // Assigns Player 1's winning position
-                    player.winPos = new Tile<>(0, -1);               
+                    player.winPos = new Tile(0, -1);               
                     break;
             }
             i++;
