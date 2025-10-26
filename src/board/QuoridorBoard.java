@@ -20,13 +20,11 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
     private List<Integer> legalMovesList;
     printErrorMessage error = new printErrorMessage();
 
-    public QuoridorBoard()
-    {
+    public QuoridorBoard() {
         legalMovesList = new ArrayList<>();
     }
 
-    public List<Integer> getLegalMovesList()
-    {
+    public List<Integer> getLegalMovesList() {
         return legalMovesList;
     }
 
@@ -39,11 +37,13 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
     {
         initializePlayerPositionBoard();
         int[] arr;
-        arr = new int[getRows()*getCols()]; //getting an array of numbers within the range of the board dimensions
+
+        // Getting an array of numbers within the range of the board dimensions
+        arr = new int[getRows()*getCols()];
         int k =0;
-        for(int i =0;i<arr.length;i++)
-        {
-            arr[i] = i+1; //getting valid tile values within the range
+        for(int i =0;i<arr.length;i++) {
+            // Getting valid tile values within the range
+            arr[i] = i+1;
         }
         for(int i =0;i<getRows();i++){
             for(int j=0;j<getCols();j++){
@@ -76,8 +76,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
      * @return void function
      */
     @Override
-    public boolean checkBoardState()
-    {
+    public boolean checkBoardState() {
         return true;
     }
 
@@ -90,51 +89,64 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
     {
         colour c = new colour();
         int i, j, row, col;
-        //Iterating through an abstract matrix of (2n+1,2m+1). This includes the * and the edges. The *'s start from
-        //0 and are incremented by n+2 while the edges start from 1 and increment by n+2.
+
+        // Iterating through an abstract matrix of (2n+1,2m+1). This includes the * and the edges. The *'s start from 0 and are incremented by n+2 while the edges start from 1 and increment by n+2.
         for (i=0; i<2*getRows()+1;i++)
         {
             for (j=0; j<2*getCols()+1;j++)
             {
-                //to print *
+                // To print *
                 if (i%2 == 0 && j%2 == 0) //Every * is located at an even position, so we check for i and j %2 = 0
                 {
                     System.out.print("  * ");
                 }
-                //to print the horizontal edges (up and down)
-                else if (i%2 == 0 && j%2 == 1) //Every up and down edge is located at a position where the i is even and j is odd inside the abstract matrix
+
+                // To print the horizontal edges (up and down)
+                // Every up and down edge is located at a position where the i is even and j is odd inside the abstract matrix
+                else if (i%2 == 0 && j%2 == 1)
                 {
                     row = i/2;
                     col = j/2;
 
                     if (row < getRows()+1 && col < getCols())
                     {
-                        if(row < getRows() && dotsBoard[row][col].up.getValueOnTile().equals(1)) //if an up edge is placed
-                        {System.out.print(dotsBoard[row][col].up.edgeColour+ "  —— " +c.endColour);}
-                        else if(row > 0 && dotsBoard[row-1][col].down.getValueOnTile().equals(1)) //if a down edge is placed
-                        {System.out.print(dotsBoard[row-1][col].down.edgeColour+ "  —— " +c.endColour);}
+                        // If an up edge is placed
+                        if(row < getRows() && dotsBoard[row][col].up.getValueOnTile().equals(1))
+                            {System.out.print(dotsBoard[row][col].up.edgeColour+ "  —— " +c.endColour);}
+
+                        // If a down edge is placed
+                        else if(row > 0 && dotsBoard[row-1][col].down.getValueOnTile().equals(1))
+                            {System.out.print(dotsBoard[row-1][col].down.edgeColour+ "  —— " +c.endColour);}
+
                         else
-                        {System.out.print("  —— ");}
+                            {System.out.print("  —— ");}
                     }
                 }
-                //to print the vertical edges (left and rigt)
-                else if (i%2 == 1 && j%2 == 0) //The left and right edges are located at positions where i is odd and j is even inside the abstract matrix
+
+                // To print the vertical edges (left and right)
+                // The left and right edges are located at positions where i is odd and j is even inside the abstract matrix
+                else if (i%2 == 1 && j%2 == 0)
                 {
                     row = i/2;
                     col = j/2;
 
                     if (row < getRows() && col < getCols() + 1)
                     {
-                        if(col < getCols() && dotsBoard[row][col].left.getValueOnTile().equals(1)) //if a left edge is placed
-                        {System.out.print(dotsBoard[row][col].left.edgeColour+ "    | " +c.endColour);}
-                        else if(col > 0 && dotsBoard[row][col-1].right.getValueOnTile().equals(1)) //if a right edge is placed
-                        {System.out.print(dotsBoard[row][col-1].right.edgeColour+ "    | " +c.endColour);} 
+                        // If a left edge is placed
+                        if(col < getCols() && dotsBoard[row][col].left.getValueOnTile().equals(1))
+                            {System.out.print(dotsBoard[row][col].left.edgeColour+ "    | " +c.endColour);}
+
+                        // If a right edge is placed
+                        else if(col > 0 && dotsBoard[row][col-1].right.getValueOnTile().equals(1))
+                            {System.out.print(dotsBoard[row][col-1].right.edgeColour+ "    | " +c.endColour);}
+
                         else
                         {System.out.print("   | ");}
                     }
                 } 
-                //to print the intitals of the player if all four edges of a tile is 1
-                else if (i%2 == 1 && j%2 == 1) //When both i and j are odd, to mark the initial of the player if they have a box claimed
+                // To print the inititals of the player if all four edges of a tile is 1
+                // When both i and j are odd, to mark the initial of the player if they have a box claimed
+                else if (i%2 == 1 && j%2 == 1)
                 {
                     row = (i-1)/2;
                     col = (j-1)/2;
@@ -187,31 +199,37 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         String edge = " ";
 
         if (parts.length == 3) {
-            num1 = Integer.parseInt(parts[0]); //splitting the input into the tile1, tile2 and edge value
+            // Splitting the input into the tile1, tile2 and edge value
+            num1 = Integer.parseInt(parts[0]);
             num2 = Integer.parseInt(parts[1]);
             edge = parts[2].toUpperCase();
-            //To check and validate if the inputted values are within bounds 
+
+            // To check and validate if the inputted values are within bounds
             if(num1 > 0 && num1 < (getRows()*getCols()) && num2 > 0 && num2 < (getRows()*getCols()) && ((num1 + 1 == num2) || (num2 == num1 + 9) || (num2 + 1 == num1) || (num1 == num2 + 9)))
             {
-                //getting the coordinates of the two tiles
+                // Getting the coordinates of the two tiles
                 int i1 = (num1 - 1)/getRows();
                 int j1 = (num1 - 1)%getCols();
                 int i2 = (num2 - 1)/getRows();
                 int j2 = (num2 - 1)%getCols();
-                if( (edge.equals("U") || edge.equals("D")) && ((num1 + 1 == num2) || (num2 + 1 == num1))) //if the edge is Up or Down (same row)
+
+                // If the edge is Up or Down (they are on the same row)
+                if( (edge.equals("U") || edge.equals("D")) && ((num1 + 1 == num2) || (num2 + 1 == num1)))
                 {
                     switch(edge)
                     {
                         case "U":
                             if(dotsBoard[i1][j1].up.getValueOnTile().equals(i) && dotsBoard[i2][j2].up.getValueOnTile().equals(i)  && i1 - 1 > 0 && i2 - 1 > 0)
                             {
+                                // Assigning the edge of that object tile to be 1
                                 dotsBoard[i1][j1].up.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2].up.setValueOnTile(~i & 1);
 
+                                // Assign the upper edge of the current tile a value of 1, since the down edge of the tile above corresponds to the up edge of the current tile.
                                 dotsBoard[i1-1][j1].down.setValueOnTile(~i & 1);
                                 dotsBoard[i2-1][j2].down.setValueOnTile(~i & 1);
 
-                                //assigning the edge colour the player's colour to indicate that it is their fence
+                                // Assigning the edge colour the player's colour to indicate that it is their fence
                                 dotsBoard[i1][j1].up.edgeColour = player.colour;
                                 dotsBoard[i2][j2].up.edgeColour = player.colour;
 
@@ -223,6 +241,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                                 return false;
                             }
                             break;
+
                         case "D":
                             if(dotsBoard[i1][j1].down.getValueOnTile().equals(i) && dotsBoard[i2][j2].down.getValueOnTile().equals(i) && i1 + 1 < getRows() && i2 + 1 < getRows())
                             {
@@ -249,18 +268,21 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     player.decreaseFences();
                     return true;
                 }
-                else if ((edge.equals("L") || edge.equals("R")) && ((num1 + 9 == num2) || (num2 + 9 == num1))) //if the edge is left or right (same column)
+
+                // If the edge is left or right (same column)
+                else if ((edge.equals("L") || edge.equals("R")) && ((num1 + 9 == num2) || (num2 + 9 == num1)))
                 {
                     switch(edge)
                     {
                         case "L":
-                            if(dotsBoard[i1][j1].left.getValueOnTile().equals(i) && dotsBoard[i2][j2].left.getValueOnTile().equals(i)  && j1 - 1 > 0 && j2 - 1 > 0)
-                            {
+                            if(dotsBoard[i1][j1].left.getValueOnTile().equals(i) && dotsBoard[i2][j2].left.getValueOnTile().equals(i)  && j1 - 1 > 0 && j2 - 1 > 0){
+                                // Assigning the edge of that object tile to be 1 and assigning the colour
                                 dotsBoard[i1][j1].left.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2].left.setValueOnTile(~i & 1);
                                 dotsBoard[i1][j1].left.edgeColour = player.colour;
                                 dotsBoard[i2][j2].left.edgeColour = player.colour;
 
+                                // Assign the side edge of the current tile a value of 1, since the right edge of the tile above corresponds to the left edge of the current tile.
                                 dotsBoard[i1][j1-1].right.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2-1].right.setValueOnTile(~i & 1);
                                 dotsBoard[i1][j1-1].right.edgeColour = player.colour;
@@ -271,9 +293,9 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                                 return false;
                             }
                             break;
+
                         case "R":
-                            if(dotsBoard[i1][j1].right.getValueOnTile().equals(i) && dotsBoard[i2][j2].right.getValueOnTile().equals(i)  && j1 + 1 < getCols() && j2 + 1 < getCols())
-                            {
+                            if(dotsBoard[i1][j1].right.getValueOnTile().equals(i) && dotsBoard[i2][j2].right.getValueOnTile().equals(i)  && j1 + 1 < getCols() && j2 + 1 < getCols()){
                                 dotsBoard[i1][j1].right.setValueOnTile(~i & 1);
                                 dotsBoard[i2][j2].right.setValueOnTile(~i & 1);
                                 dotsBoard[i1][j1].right.edgeColour = player.colour;
@@ -295,21 +317,12 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     player.decreaseFences();
                     return true;
                 }
-                else
-                {
+                else {
                     return false;
                 }
             }
         }
-        else
-        {
-            return false;
-        }
-        // else
-        // {
-        //     return false;
-        // }
-        return false; //check
+        return false;
     }
 
     /**
@@ -319,10 +332,11 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
      */
     public void legalMoves(int i, int j)
     {
-        //checking which tiles are adjacent to the current position of the player
+        // Checking which tiles are adjacent to the current position of the player
         if ( i+1 < getRows()) 
         {
-            if(dotsBoard[i][j].down.getValueOnTile().equals(0)) //checking if there is an edge blocking a valid move of the player
+            // Checking if there is an edge blocking a valid move of the player
+            if(dotsBoard[i][j].down.getValueOnTile().equals(0))
             {
                 legalMovesList.add(dotsBoard[i+1][j].i_piece.getValueOnTile() ); //if not, add to legal moves list
             }
@@ -360,51 +374,59 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
      */
     public void edgeCaseMoves(int i, int j){
         int a, b;
-        int tile = (i*getCols()) + j + 1; //getting the tile value of the current position of the player
 
-        for (int l : legalMovesList) //iterating through the list obtained from getLegalMoves()
+        // Getting the tile value of the current position of the player
+        int tile = (i*getCols()) + j + 1;
+
+        // Iterating through the list obtained from getLegalMoves()
+        for (int l : legalMovesList)
         {
-            a = (l - 1)/getRows(); //coordinates of the tile
+            // Coordinates of the tile
+            a = (l - 1)/getRows();
             b = (l - 1)%getCols();
 
             //If there is a player adjacent to the current player (by checking the playerPositionBoard)
             if( !playerPiecePosition[a][b].s_piece.getValueOnTile().equals("0"))
             {
-                legalMoves(a, b); //getting the legal moves of the other player
+                // Getting the legal moves of the other player
+                legalMoves(a, b);
 
-                //removing the tiles of the current player and other player from the list
+                // Removing the tiles of the current player and other player from the list
                 if(legalMovesList.contains(l) && legalMovesList.contains(tile)) {
                     legalMovesList.remove(Integer.valueOf(l));
                     legalMovesList.remove(Integer.valueOf(tile));
                 }
-                    if (i == a) //if the players are in the same row
-                    {
-                        //if there is no wall blocking the other player, remove the diagnol moves for the current player
-                        //the current player can only jump over the other player in this case
-                        if( dotsBoard[a][b].left.getValueOnTile().equals(0) && dotsBoard[a][b].right.getValueOnTile().equals(0)) {
-                            if (a - 1 > 0) {
-                                int invalid1 = ((a - 1 ) * getCols()) + b + 1;
-                                legalMovesList.remove(Integer.valueOf(invalid1));
-                            }
-                            if (a + 1 < getCols()) {
-                                int invalid2 = ((a+1) * getCols()) + b + 1;
-                                legalMovesList.remove(Integer.valueOf(invalid2));
-                            }
+
+                //if the players are in the same row
+                if (i == a) {
+                    //if there is no wall blocking the other player, remove the diagnol moves for the current player
+                    //the current player can only jump over the other player in this case
+                    if( dotsBoard[a][b].left.getValueOnTile().equals(0) && dotsBoard[a][b].right.getValueOnTile().equals(0)) {
+                        if (a - 1 > 0) {
+                            int invalid1 = ((a - 1 ) * getCols()) + b + 1;
+                            legalMovesList.remove(Integer.valueOf(invalid1));
+                        }
+                        if (a + 1 < getCols()) {
+                            int invalid2 = ((a+1) * getCols()) + b + 1;
+                            legalMovesList.remove(Integer.valueOf(invalid2));
                         }
                     }
-                    if (j == b) //if the players are in the same column
-                    {
-                        if( dotsBoard[a][b].up.getValueOnTile().equals(0) && dotsBoard[a][b].down.getValueOnTile().equals(0)) {
-                            if (b - 1 > 0) {
-                                int invalid1 = (a * getCols()) + b;
-                                legalMovesList.remove(Integer.valueOf(invalid1));
-                            }
-                            if (b + 1 < getCols()) {
-                                int invalid2 = (a * getCols()) + b + 2;
-                                legalMovesList.remove(Integer.valueOf(invalid2));
-                            }
+                }
+
+                // If the players are in the same column
+                if (j == b)
+                {
+                    if( dotsBoard[a][b].up.getValueOnTile().equals(0) && dotsBoard[a][b].down.getValueOnTile().equals(0)) {
+                        if (b - 1 > 0) {
+                            int invalid1 = (a * getCols()) + b;
+                            legalMovesList.remove(Integer.valueOf(invalid1));
+                        }
+                        if (b + 1 < getCols()) {
+                            int invalid2 = (a * getCols()) + b + 2;
+                            legalMovesList.remove(Integer.valueOf(invalid2));
                         }
                     }
+                }
                 break;
             }
         }
@@ -415,34 +437,42 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
      * @return void function
      */
     public void printBoardExample() {
-        int i, j, val;
+        int i, j, val, rows, cols;
         val = 1;
+        rows = 9;
+        cols = 9;
 
-        for (i = 0; i < 2 * getRows() + 1; i++) {
-            for (j = 0; j < 2 * getCols() + 1; j++) {
+        System.out.println();
+        System.out.println();
+        for (i = 0; i < 2 * rows + 1; i++) {
+            for (j = 0; j < 2 * cols + 1; j++) {
+
                 // To print *
                 if (i % 2 == 0 && j % 2 == 0) {
                     System.out.print("  * ");
                 }
 
-                //To print the horizontal edges (up and down)
+                // To print the horizontal edges (up and down)
                 else if (i % 2 == 0 && j % 2 == 1) {
-                    System.out.print("  —— ");
+                    System.out.print("  ——  ");
                 }
 
                 // To print the vertical edges (left and right)
                 else if (i % 2 == 1 && j % 2 == 0) {
-                    System.out.print("    | ");
+                    System.out.print("  |  ");
                 }
 
-                // To print the intital's of the player
+                // To print the initial's of the player
                 else if (i % 2 == 1 && j % 2 == 1) {
-                    System.out.print("  " + val + " ");
+                    System.out.printf(" %2d  ", val);
                     val++;
+                }
+                else {
+                    System.out.print("     ");
                 }
             }
             System.out.println();
         }
-
+        System.out.println();
     }
 }

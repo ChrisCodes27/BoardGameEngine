@@ -21,9 +21,9 @@ public class Instructions
      */
     public void displaySlidingPuzzleInstructions()
     {
-        System.out.println("------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
         System.out.println("               SLIDING PUZZLE");
-        System.out.println("------------------------------------------");
+        System.out.println("--------------------------------------------------------------");
         System.out.println();
         System.out.println("GOAL: Get the numbers in the puzzle in order (starting 1,2,3 ...) from left to right of each row in the board!");
         System.out.println("HOW TO PLAY:");
@@ -64,7 +64,7 @@ public class Instructions
         System.out.println("4. If you want to quit the game at any point, please type 'QUIT'");
         System.out.println("When all boxes in the board are filled, the player with the most boxes wins.");
         System.out.println();
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
+        System.out.println("\u001B[31m----------------------------------------------------------------\u001B[0m");
 
     }
 
@@ -74,13 +74,13 @@ public class Instructions
      */
     public void displayQuoridorInstructions()
     {
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
-        System.out.println("\033[1;31;47m              QUORIDOR            \033[0m");
-        System.out.println("\u001B[31m------------------------------------------\u001B[0m");
+        System.out.println("\u001B[36m----------------------------------------------------------\u001B[0m");
+        System.out.println("\033[1;36;47m                       QUORIDOR                          \033[0m");
+        System.out.println("\u001B[36m-----------------------------------------------------------\u001B[0m");
         System.out.println();
         System.out.println("GOAL: Reach the opposite side of the board before your opponent! Each player moves their pawn across the 9x9 grid while strategically placing walls to block the other player’s path.");
         System.out.println();
-        System.out.println("\u001B[31mHOW TO PLAY:\u001B[0m");
+        System.out.println("\u001B[36mHOW TO PLAY:\u001B[0m");
         System.out.println();
         System.out.println("1. The board is labeled with numbers from 1 to 81, representing each tile position.");
         q.printBoardExample();
@@ -101,6 +101,6 @@ public class Instructions
         System.out.println();
         System.out.println(" MAY THE BEST PLAYER WIN!");
         System.out.println();
-        System.out.println("\u001B[31m--------------------------------------------------------------------------------\u001B[0m");
+        System.out.println("\u001B[36m--------------------------------------------------------------------------------\u001B[0m");
     }
 }
