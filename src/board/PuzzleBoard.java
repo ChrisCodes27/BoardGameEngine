@@ -11,6 +11,7 @@ package board;
 import java.util.*;
 import gameinterfaces.puzzleinterfaces.PuzzleFunctions;
 
+@SuppressWarnings("unchecked")
 public class PuzzleBoard extends Board implements PuzzleFunctions{
 
     public Tile emptySlotTracker = new Tile<>(); //To store the position of the empty tile on the board

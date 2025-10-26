@@ -14,6 +14,7 @@ import colour.colour;
 import printerrormessage.printErrorMessage;
 import gameinterfaces.ExampleBoard;
 
+@SuppressWarnings("unchecked")
 public class DotsAndBoxesBoard extends Board implements ExampleBoard{
     
     public BoxTile[][] dotsBoard;

@@ -6,6 +6,7 @@ import player.QuoridorPlayer;
 import colour.colour;
 import printerrormessage.printErrorMessage;
 
+@SuppressWarnings("unchecked")
 public class QuoridorBoard extends DotsAndBoxesBoard{
 
     //public BoxTile[][] quoridorBoard;

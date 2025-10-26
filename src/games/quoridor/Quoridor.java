@@ -13,8 +13,7 @@ import board.*;
 import player.QuoridorPlayer;
 import games.Games;
 
-import javax.swing.*;
-
+@SuppressWarnings("unchecked")
 public class Quoridor extends Games<QuoridorPlayer> {
     Scanner inp = new Scanner(System.in);
     QuoridorBoard board = new QuoridorBoard();
