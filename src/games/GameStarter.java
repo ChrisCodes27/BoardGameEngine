@@ -20,12 +20,12 @@ public class GameStarter{
     printErrorMessage error = new printErrorMessage();
     /**
      * contains a menu of games for the player to choose from
-     * @param no parameters
      * @return void function
      */
     public void chooseGame()
     {
         char continueGame = 'N';
+        // Main menu
         do{
         System.out.println("Welcome! Choose a game from the menu below by entering the corresponding serial number: ");
         System.out.println("    1. Sliding Puzzle");
@@ -40,36 +40,49 @@ public class GameStarter{
         }
         catch (InputMismatchException e)
         {
+            // Handles exception cases
             error.invalidMenuInput();
             inp.nextLine();
         }
 
+        // Players input is checked in switch case
         switch(choice)
         {
+            // Sliding Puzzle
             case 1:
-                PuzzleGame p = new PuzzleGame(); //Sliding Puzzle
+                PuzzleGame p = new PuzzleGame();
                 p.startGame();
                 break;
+
+            // Dots and Boxes
             case 2:
-                DotsAndBoxes d = new DotsAndBoxes(); //Dots and Boxes
+                DotsAndBoxes d = new DotsAndBoxes();
                 d.startGame();
                 break;
+
+            // Quoridor
             case 3:
-                Quoridor q = new Quoridor(); //Quoridor
+                Quoridor q = new Quoridor();
                 q.startGame();
                 break;
+
+            // Exit from the game
             case 4:
-                System.out.println("See you later!"); //To exit from the game
+                System.out.println("See you later!");
                 System.exit(0);
                 break;
+
+            // Handles invalid inputs
             default:
-                error.invalidMenuInput();//invalid input
+                error.invalidMenuInput();
                 boolean loop = true;
                 break;
         }
 
-        System.out.print("Do you want to play another game? (Y/N):  "); //after a game is played, asks the player if they want to play another type of game
+        // After a game is played, asks the player if they want to play another type of game
+        System.out.print("Do you want to play another game? (Y/N):  ");
 
+        // Players response
         continueGame = inp.next().charAt(0);
         } while(Character.toLowerCase(continueGame)=='y');
         System.out.println();

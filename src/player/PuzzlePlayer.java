@@ -18,6 +18,10 @@ import java.util.*;
 public class PuzzlePlayer extends Player{
     Scanner inp = new Scanner(System.in);
 
+    /**
+     * Constructor for PuzzlePlayer.
+     * Initializes the win status to false and number of moves to zero.
+     */
     public PuzzlePlayer()
     {
         this.win = false;
@@ -25,24 +29,25 @@ public class PuzzlePlayer extends Player{
     }
 
     /**
-     * to get the input from the user which contains value of the tile that want to move
-     * @param No parameters
+     * Prompts the player to enter the tile number they want to move.
      * @return void function
      */
     @Override
     public void move()
     {
         boolean flag = true;
-        while(flag)
-        {
-            try
-            {
-            System.out.println("Enter the tile number that you want to move:");
-            choice = inp.nextInt();
-            flag = false;
+
+        // Loop flag to continue until valid input is provided
+        while(flag) {
+            try {
+                System.out.println("Enter the tile number that you want to move:");
+                choice = inp.nextInt();
+
+                // Resets flag to exit after valid input
+                flag = false;
             }
-            catch (InputMismatchException e)
-            {
+            catch (InputMismatchException e) {
+                // Clears the invalid input and displays error message
                 inp.nextLine();
                 invalidMove();
             }
@@ -51,7 +56,6 @@ public class PuzzlePlayer extends Player{
 
     /**
      * To display an error message if the input of the player is not a valid one
-     * @param No parameters
      * @return void function
      */
     @Override
