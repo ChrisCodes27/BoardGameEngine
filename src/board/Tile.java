@@ -11,10 +11,11 @@ package board;
 
 import java.util.*;
 
-public class Tile<T>{
+public class Tile {
     private int row;
     private int column;
-    public Piece<T> piece;
+    public Piece<String> s_piece;
+    public Piece<Integer> i_piece;
 
     /**
      * Constructs a Tile with the specified row and column.

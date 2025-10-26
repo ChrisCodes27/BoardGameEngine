@@ -9,7 +9,7 @@ package board;
 
 import board.boxpiece.Edge;
 
-public class BoxTile<T> extends Tile<T> {
+public class BoxTile extends Tile {
     Edge up, down, left, right;
 
     public BoxTile() {

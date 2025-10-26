@@ -8,8 +8,12 @@
 package printerrormessage;
 
 import java.util.*;
+import colour.colour;
 
 public class printErrorMessage{
+
+    colour c = new colour();
+    public String errorStatement;
 
     /**
      * Displays an error message if the menu item selected is not valid
@@ -17,7 +21,8 @@ public class printErrorMessage{
      */
     public void invalidMenuInput()
     {
-        System.out.println("Invalid Input! Select a valid item from the menu  ");
+        errorStatement = "Invalid Input! Select a valid item from the menu  ";
+        print(errorStatement);
     }
 
     /**
@@ -26,8 +31,8 @@ public class printErrorMessage{
      */
     public void invalidMove()
     {
-        System.out.println("Invalid move! Select a valid move!");
-        System.out.println();
+        errorStatement = "Invalid move! Select a valid move!";
+        print(errorStatement);
     }
 
     /**
@@ -36,16 +41,17 @@ public class printErrorMessage{
      */
     public void invalidTypeInput(String type)
     {
-        System.out.println("Invalid Input! Input a valid "+type+"!");
-        System.out.println();
+        errorStatement = "Invalid Input! Input a valid " + type;
+        print(errorStatement);
     }
 
     /**
      * Displays an error message if the fence placed is not valid
      * @return void function
      */
-    public void fencePlaced(){
-        System.out.println("A fence has already been placed here!");;
+    public void fencePlacement(){
+        errorStatement = "Invalid Placement! Select a valid fence position!";
+        print(errorStatement);
     }
 
     /**
@@ -53,6 +59,18 @@ public class printErrorMessage{
      * @return void function
      */
     public void invalidPath(){
-        System.out.println("No Valid Path Available For your Opponent! Illegal move!");
+        errorStatement = "No Valid Path Available For your Opponent! Illegal move!";
+        print(errorStatement);
+    }
+
+    public void invalidName()
+    {
+        errorStatement = "Name must contain characters!";
+        print(errorStatement);
+    }
+
+    public void print(String statement)
+    {
+        System.out.println(c.red + statement + c.endColour);
     }
 }

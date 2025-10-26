@@ -11,10 +11,9 @@ package board;
 import java.util.*;
 import gameinterfaces.puzzleinterfaces.PuzzleFunctions;
 
-@SuppressWarnings("unchecked")
 public class PuzzleBoard extends Board implements PuzzleFunctions{
 
-    public Tile emptySlotTracker = new Tile<Integer>(); //To store the position of the empty tile on the board
+    public Tile emptySlotTracker = new Tile(); //To store the position of the empty tile on the board
     public Map<Integer, Tile> posOfNumber = new HashMap<>(); //to store the current position with their corresponding values
     public Map<Integer, Tile> winState = new HashMap<>();//to store the solved state position with their corresponding values
     List<Integer> adjacentVals = new ArrayList<>();
@@ -38,21 +37,19 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         for(int i =0;i<getRows();i++){
             for(int j=0;j<getCols();j++){
                 if (i == getRows() - 1 && j == getCols() - 1) {
-                    gameBoard[i][j] = new Tile<>();
+                    gameBoard[i][j] = new Tile();
                     gameBoard[i][j].setRow(i);
                     gameBoard[i][j].setColumn(j);
-                    gameBoard[i][j].piece = new Piece<>(0);
+                    gameBoard[i][j].i_piece = new Piece<>(0);
                     emptySlotTracker.setRow(i);
                     emptySlotTracker.setColumn(j);
-                }
-
-                else {
-                    gameBoard[i][j] = new Tile<>();
+                }       else {
+                    gameBoard[i][j] = new Tile();
                     gameBoard[i][j].setRow(i);
                     gameBoard[i][j].setColumn(j);
-                    gameBoard[i][j].piece = new Piece<>(arr[k]);
-                    posOfNumber.put(arr[k], new Tile<>(i,j));
-                    winState.put(arr[k], new Tile<>(i,j));
+                    gameBoard[i][j].i_piece = new Piece<>(arr[k]);
+                    posOfNumber.put(arr[k], new Tile(i,j));
+                    winState.put(arr[k], new Tile(i,j));
                     k++;
                 }
             }
@@ -88,26 +85,25 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         for (int i = 0; i < moves; i++) {
             adjacentVals.clear();
             if (emptySlotTracker.getRow() - 1 >= 0) {
-                adjacentVals.add((Integer)gameBoard[emptySlotTracker.getRow()-1][emptySlotTracker.getColumn()].piece.getValueOnTile());
+                adjacentVals.add(gameBoard[emptySlotTracker.getRow()-1][emptySlotTracker.getColumn()].i_piece.getValueOnTile());
             }
             if (emptySlotTracker.getRow() + 1 < getRows()) {
-                adjacentVals.add((Integer)gameBoard[emptySlotTracker.getRow()+1][emptySlotTracker.getColumn()].piece.getValueOnTile());
+                adjacentVals.add(gameBoard[emptySlotTracker.getRow()+1][emptySlotTracker.getColumn()].i_piece.getValueOnTile());
             }
             if (emptySlotTracker.getColumn() - 1 >= 0) {
-                adjacentVals.add((Integer)gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()-1].piece.getValueOnTile());
+                adjacentVals.add(gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()-1].i_piece.getValueOnTile());
             }
             if (emptySlotTracker.getColumn() + 1 < getCols()) {
-                adjacentVals.add((Integer)gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()+1].piece.getValueOnTile());
+                adjacentVals.add(gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()+1].i_piece.getValueOnTile());
             }
             if (!adjacentVals.isEmpty()) {
                 // Selecting a random value from the list of adjacent values
                 int val = adjacentVals.get(rand.nextInt(adjacentVals.size()));
                 Tile randNum = posOfNumber.get(val);
-                posOfNumber.put(val, new Tile<>(emptySlotTracker.getRow(),emptySlotTracker.getColumn()));
+                posOfNumber.put(val, new Tile(emptySlotTracker.getRow(),emptySlotTracker.getColumn()));
 
-                // Swapping the random value with the empty tile.
-                gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()].piece.setValueOnTile(val);
-                gameBoard[randNum.getRow()][randNum.getColumn()].piece.setValueOnTile(0);
+                gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()].i_piece.setValueOnTile(val); //swapping the random value with the empty tile.
+                gameBoard[randNum.getRow()][randNum.getColumn()].i_piece.setValueOnTile(0);
                 emptySlotTracker.copy(randNum);
             }
         }
@@ -182,10 +178,10 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
     @Override
     public void swap(Tile p, int choice)
     {
-        gameBoard[p.getRow()][p.getColumn()].piece.setValueOnTile(0);
-        gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()].piece.setValueOnTile(choice);
+        gameBoard[p.getRow()][p.getColumn()].i_piece.setValueOnTile(0);
+        gameBoard[emptySlotTracker.getRow()][emptySlotTracker.getColumn()].i_piece.setValueOnTile(choice);
 
-        Tile temp = new Tile<>(p);
+        Tile temp = new Tile(p);
         p.copy(emptySlotTracker);
         emptySlotTracker.copy(temp);
         printBoardState();
@@ -200,13 +196,13 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
     {
         for(int i=0;i<getRows();i++)
         {   for(int j=0;j<getCols();j++) {
-            if (gameBoard[i][j].piece.getValueOnTile().equals(0)) {
-                // Printing a space to represent the empty tile on the board
-                System.out.print("   ");
+            if (gameBoard[i][j].i_piece.getValueOnTile().equals(0))
+            {
+                System.out.print("   "); //printing a space to represent the empty tile on the board
             }
-
-            else {
-                System.out.print(String.format("%2d ", gameBoard[i][j].piece.getValueOnTile()));
+            else
+            {
+                System.out.print(String.format("%2d ", gameBoard[i][j].i_piece.getValueOnTile()));
             }
         }
             System.out.println();
