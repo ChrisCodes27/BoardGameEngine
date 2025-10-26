@@ -94,7 +94,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         int i, j, row, col;
 
         // Iterating through an abstract matrix of (2n+1,2m+1). This includes the * and the edges. The *'s start from 0 and are incremented by n+2 while the edges start from 1 and increment by n+2.
-        for (i=0; i<2*getRows()+1;i++)
+        for (i=0; i < 2 * getRows() + 1 ; i++)
         {
             for (j=0; j<2*getCols()+1;j++)
             {
