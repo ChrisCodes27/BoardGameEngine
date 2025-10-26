@@ -1,9 +1,9 @@
 /**
- * Filename: PuzzlePlayer.java
+ * Filename: QuoridorPlayer.java
  * Author: Chris Mary Benson, Nandana Shashi
- * Date: 2025-Sept-14
- * Description: A player class for Sliding Puzzle which extends from the abstract player class. Has functions specific
- * to Sliding Puzzle.
+ * Date: 2025-Oct-18
+ * Description: A player class for Quoridor which extends from the abstract player class. Has functions specific
+ * to Quoridor.
  */
 
 package player;
@@ -52,13 +52,17 @@ public class QuoridorPlayer extends Player{
         return fences;
     }
 
+    /**
+     * Restores the player's number of fences for the next game
+     * @return void function
+     */
     public void restore()
     {
         setPlayerFences();
     }
 
     /**
-     * To get the input from the user which contains value of the tile that want to move
+     * To get the input from the user which contains value of the tile that they want to move
      * @return void function
      */
     @Override

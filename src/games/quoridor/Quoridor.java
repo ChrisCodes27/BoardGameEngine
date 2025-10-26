@@ -1,8 +1,8 @@
 /**
- * Filename: DotsAndBoxes.java
+ * Filename: Quoridor.java
  * Author: Chris Mary Benson, Nandana Shashi
- * Date: 2025-Oct-02
- * Description: A central class for the Dots and Boxes game. Extends the Games class.
+ * Date: 2025-Oct-18
+ * Description: A central class for the Quoridor game. Extends the Games class.
  */
 
 package games.quoridor;
@@ -226,7 +226,7 @@ public class Quoridor extends Games<QuoridorPlayer> {
     }
 
     /**
-     * Breadth First Search (BFS) to check whether each player from their current position still has a valid path to their wiinning side.
+     * Breadth First Search (BFS) to check whether each player from their current position still has a valid path to their winning position.
      * @return boolean function
      */
     public boolean findValidPath()
@@ -251,7 +251,7 @@ public class Quoridor extends Games<QuoridorPlayer> {
             {
                 int current = queue.poll();
 
-                // Finds the index value by using the value on the tile
+                // Finds the matrix coordinates by using the value on the tile
                 int i = (current - 1)/board.getRows();
                 int j = (current - 1)%board.getCols();
 
@@ -432,7 +432,7 @@ public class Quoridor extends Games<QuoridorPlayer> {
             // Checks if the players row matches their goal side
             if(player.winPos.getRow() == player.playerPosition.getRow())
             {
-                // Updates the flag to game will be done
+                // Updates the flag for game will be done
                 isGameDone = true;
                 board.printBoardState();
                 System.out.println(player.getName() + " has won the game with " + player.noOfMoves + " moves !");

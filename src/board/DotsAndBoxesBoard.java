@@ -66,7 +66,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
     public void printBoardState()
     {
         colour c = new colour();
-        int i,j;
+        int i, j, row, col;
 
         // Labeling the rows and columns of the board alphabetically
         char cl = 'A';
@@ -82,14 +82,14 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         System.out.println();
 
         // Iterating through an abstract matrix of (2n+1,2m+1). This includes the * and the edges. The *'s start from 0 and are incremented by n+2 while the edges start from 1 and increment by n+2.
-        for (i=0; i<2*getRows()+1;i++) 
+        for (i=0; i<2*getRows()+1;i++)
         {
             if(i%2 != 0)
             {
                 System.out.print(cl);
                 cl++;
             }
-            for (j=0; j<2*getCols()+1;j++) 
+            for (j=0; j<2*getCols()+1;j++)
             {
                 // Print *
                 // Every * is located at an even position, so we check for i%2 = 0 and j%2 = 0
@@ -103,8 +103,8 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
                 else if (i%2 == 0 && j%2 == 1)
                 {
                     // The original position of the edge in the nxm matrix is i and j divided by 2
-                    int row = i/2;
-                    int col = j/2;
+                    row = i/2;
+                    col = j/2;
 
                     // Validating bounds
                     if (row < getRows()+1 && col < getCols()) {
@@ -127,8 +127,8 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
                 else if (i%2 == 1 && j%2 == 0)
                 {
                     // The original position of the edge in the nxm matrix is i and j divided by 2
-                    int row = i/2;
-                    int col = j/2;
+                    row = i/2;
+                    col = j/2;
 
                     // Validating bounds
                     if (row < getRows() && col < getCols()+1) {
@@ -150,8 +150,8 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
                 // When both i and j are odd, to mark the initial of the player if they have a box claimed
                 else if (i%2 == 1 && j%2 == 1)
                 {
-                    int row = (i-1)/2;
-                    int col = (j-1)/2;
+                    row = (i-1)/2;
+                    col = (j-1)/2;
                     if (row < getRows() && col < getCols() && !dotsBoard[row][col].piece.getValueOnTile().equals("0")) 
                     {
                         System.out.print("  "+ dotsBoard[row][col].piece.getValueOnTile()+ "  ");
@@ -166,7 +166,11 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         }
     }
 
-
+    /**
+     * Places an edge on the board according to the players input
+     * @param player the current player making the move
+     * @return void function
+     */
     public boolean makeMove(DotsAndBoxesPlayer player)
     {
         int i,j;
@@ -261,6 +265,11 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         }
     }
 
+    /**
+     * Checks if the a player has claimed a box after placing an edge
+     * @param player the current player who made the move
+     * @return true/false depending on whether the player made the move or not
+     */
     public boolean checkBox(DotsAndBoxesPlayer player)
     { 
         int i,j;
@@ -299,8 +308,11 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         }
          return false; //else false
     }
-    
 
+    /**
+     * Prints an example board to be used for the instructions of the game
+     * @return void function
+     */
     @Override
     public void printExampleBoard()
     {
@@ -318,7 +330,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
         }
         r = 'A';
         System.out.println();
-        for (i=0; i<2*rows+1;i++) 
+        for (i=0; i<2*rows+1;i++)
         {
             if(i%2 != 0)
             {
@@ -326,7 +338,7 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
                 temp = String.valueOf(cl);
                 cl++;
             }
-            for (j=0; j<2*cols+1;j++) 
+            for (j=0; j<2*cols+1;j++)
             {
                 if (i%2 == 0 && j%2 == 0)
                 {
@@ -334,39 +346,17 @@ public class DotsAndBoxesBoard extends Board implements ExampleBoard{
                 }
                 else if (i%2 == 0 && j%2 == 1)
                 {
-                    int row = i/2;
-                    int col = j/2;
-
-                    if (row < rows +1 && col < cols) {
-                        
-                        System.out.print("      ");
-                    } 
-                    else 
-                    {
-                        System.out.print("      ");
-                    }
+                    System.out.print("      ");
                 }
                 else if (i%2 == 1 && j%2 == 0)
                 {
-                    int row = i/2;
-                    int col = j/2;
-
-                    if (row < rows && col < cols +1) 
-                    {
-                       System.out.print("     ");
-                    }
-                    else
-                    {
-                        System.out.print("     ");
-                    }
+                    System.out.print("     ");
                 }
                 else if (i%2 == 1 && j%2 == 1)
-                    {
-                    int row = (i-1)/2;
-                    int col = (j-1)/2;
-                    System.out.print("  "+temp+""+r+"  ");
-                    r++;
-                    }
+                {
+                System.out.print("  "+temp+""+r+"  ");
+                r++;
+                }
            }
             System.out.println();
             r = 'A';

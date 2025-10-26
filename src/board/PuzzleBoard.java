@@ -14,11 +14,15 @@ import gameinterfaces.puzzleinterfaces.PuzzleFunctions;
 @SuppressWarnings("unchecked")
 public class PuzzleBoard extends Board implements PuzzleFunctions{
 
-    public Tile emptySlotTracker = new Tile<>(); //To store the position of the empty tile on the board
+    public Tile emptySlotTracker = new Tile<Integer>(); //To store the position of the empty tile on the board
     public Map<Integer, Tile> posOfNumber = new HashMap<>(); //to store the current position with their corresponding values
     public Map<Integer, Tile> winState = new HashMap<>();//to store the solved state position with their corresponding values
     List<Integer> adjacentVals = new ArrayList<>();
 
+    /**
+     * Intializing the sliding puzzle board
+     * @return void function
+     */
     @Override
     public void initializeBoard()
     {
@@ -32,14 +36,14 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         for(int i =0;i<getRows();i++){
             for(int j=0;j<getCols();j++){
                 if (i == getRows() - 1 && j == getCols() - 1) {
-                    gameBoard[i][j] = new Tile<Integer>();
+                    gameBoard[i][j] = new Tile<>();
                     gameBoard[i][j].setRow(i);
                     gameBoard[i][j].setColumn(j);
                     gameBoard[i][j].piece = new Piece<>(0);
                     emptySlotTracker.setRow(i);
                     emptySlotTracker.setColumn(j);
                 }       else {
-                    gameBoard[i][j] = new Tile<Integer>();
+                    gameBoard[i][j] = new Tile<>();
                     gameBoard[i][j].setRow(i);
                     gameBoard[i][j].setColumn(j);
                     gameBoard[i][j].piece = new Piece<>(arr[k]);
@@ -51,6 +55,10 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         shuffleBoard(); //shuffling the board from a solved state to ensure solvability
     }
 
+    /**
+     * Shuffling the board from a solved state
+     * @return void function
+     */
     public void shuffleBoard()
     {
         int moves=0;
@@ -95,6 +103,10 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         }
     }
 
+    /**
+     * Checking to see if the board has been solved after player moves a tile
+     * @return void function
+     */
     @Override
     public boolean checkBoardState()
     {
@@ -119,7 +131,11 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         }
     }
 
-
+    /**
+     * To move the inputted tile on the board
+     * @param choice the tile that the player wants to move
+     * @return true/false - to indicate whether the tile was moved or not
+     */
     public boolean makeMove(int choice)
     {
         if(choice > getRows()*getCols() || choice < 0) //to check if the choice is out of the range
@@ -144,6 +160,11 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         }
     }
 
+    /**
+     * Swapping the tile with the empty position on the board
+     * @param p,chocie the tile to be swapped and the choice of the player
+     * @return void function
+     */
     @Override
     public void swap(Tile p, int choice)
     {
@@ -156,6 +177,10 @@ public class PuzzleBoard extends Board implements PuzzleFunctions{
         printBoardState();
     }
 
+    /**
+     * Printing the board state after every move
+     * @return void function
+     */
     @Override
     public void printBoardState()
     {
