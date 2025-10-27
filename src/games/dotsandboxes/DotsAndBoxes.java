@@ -15,7 +15,6 @@ import games.Games;
 import colour.colour;
 
 public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
-    Scanner inp = new Scanner(System.in);
     DotsAndBoxesBoard board = new DotsAndBoxesBoard();
 
     public DotsAndBoxes()
@@ -24,18 +23,6 @@ public class DotsAndBoxes extends Games<DotsAndBoxesPlayer>{
         super(2);
     }
 
-    /**
-     * Assigning a colour to each player in the game
-     * @return void function
-     */
-    public void assignColour() {
-        colour c = new colour();
-        int i =0;
-        for(DotsAndBoxesPlayer player: players) {
-            player.colour = c.colours.get(i);
-            i++;
-        }
-    }
 
     /**
      * The starting point of the game

@@ -18,7 +18,6 @@ import java.sql.SQLOutput;
 import java.util.*;
 
 public class PuzzleGame extends Games<PuzzlePlayer>{
-    Scanner inp = new Scanner(System.in);
     public PuzzleBoard board = new PuzzleBoard();
     printErrorMessage error = new printErrorMessage();
 
@@ -29,7 +28,7 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
 
     /**
      * Initializing the player for the sliding puzzle game
-     * @param i
+     * @param n
      * @return void function
      */
     @Override
@@ -45,7 +44,6 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
 
     /**
      * starting point of the game
-     * @param No parameters
      * @return void function
      */
     @Override
@@ -64,25 +62,34 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
 
         do{
             System.out.println("Welcome "+ players.get(0).getName()+"!");
-            while(checkInput == false) //validating the input from the player
+
+            // Validating the input from the player
+            while(checkInput == false)
             {
                 System.out.println("Please enter the level of the sliding puzzle (rows x column) eg. 2x3");
                 size = inp.nextLine();
-                checkInput = board.setDimensions(size); //setting the rows and columns of the board
-            } 
 
-            board.gameBoard = new Tile[board.getRows()][board.getCols()]; //initializing the board for the game with the size
+                // Setting the rows and columns of the board
+                checkInput = board.setDimensions(size);
+            }
+
+            // Initializing the board for the game with the size
+            board.gameBoard = new Tile[board.getRows()][board.getCols()];
 
             while(checkInput == true)
             {
                 System.out.println("Choose your Difficulty Level: 1. EASY 2. MEDIUM 3. HARD (Enter the Serial Number)");
-                while(!inp.hasNextInt()) //validating input
+
+                // Validating input
+                while(!inp.hasNextInt())
                 {
                     error.invalidMenuInput();
                     inp.next();
                 }
                 board.difficultyLevel = inp.nextInt();
-                if(board.difficultyLevel > 3 || board.difficultyLevel < 1) //validating input
+
+                // Validating input
+                if(board.difficultyLevel > 3 || board.difficultyLevel < 1)
                 {
                     error.invalidMenuInput();
                 }
@@ -94,22 +101,31 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
             System.out.println("BEGIN!");
             board.initializeBoard();
             board.printBoardState();
-            while(players.get(0).win==false) //if the player hasnt won the game
+
+            // If the player hasnt won the game
+            while(players.get(0).win==false)
             {
-                players.get(0).move(); //get the choice from the player
-                boolean invalid = board.makeMove(players.get(0).choice); //make the move according to the choice
-                if (invalid == true) //if its an invalid move
-                {
+                // Get the choice from the player
+                players.get(0).move();
+
+                // Make the move according to the choice
+                boolean invalid = board.makeMove(players.get(0).choice);
+
+                // If its an invalid move
+                if (invalid == true){
                     players.get(0).invalidMove();
                 }
-                else
-                {
-                    players.get(0).noOfMoves++; //increment the number of moves since it is a valid move
+
+                else {
+                    // Increment the number of moves since it is a valid move
+                    players.get(0).noOfMoves++;
                     stats();
                     checkWhoWon();
                 }
             }
-            players.get(0).checkWin(); //check if the player has won and display stats
+
+            // Check if the player has won and display stats
+            players.get(0).checkWin();
             System.out.println("Do you want to play another round? (Y/N)");
             ch = inp.next().charAt(0);
             inp.nextLine();
@@ -119,7 +135,8 @@ public class PuzzleGame extends Games<PuzzlePlayer>{
     @Override
     public void checkWhoWon()
     {
-        players.get(0).win = board.checkBoardState(); //checking if the game is solved after every move
+        // Checking if the game is solved after every move
+        players.get(0).win = board.checkBoardState();
     }
 
     @Override

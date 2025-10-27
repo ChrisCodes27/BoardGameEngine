@@ -34,6 +34,7 @@ public abstract class Player implements MoveFunctions{
      {
           this.name = name;
      }
+     public Scanner inp = new Scanner(System.in);
 
      /**
       * Checks if the win variable for the player is true, if it is, proceeds to congratulate the user and displays the number of moves made.

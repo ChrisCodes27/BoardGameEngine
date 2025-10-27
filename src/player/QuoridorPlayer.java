@@ -13,7 +13,6 @@ import printerrormessage.printErrorMessage;
 
 public class QuoridorPlayer extends Player{
     private int fences;
-    Scanner inp = new Scanner(System.in);
     printErrorMessage error = new printErrorMessage();
 
     /**

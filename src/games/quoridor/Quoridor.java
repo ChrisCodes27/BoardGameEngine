@@ -14,7 +14,6 @@ import player.QuoridorPlayer;
 import games.Games;
 
 public class Quoridor extends Games<QuoridorPlayer> {
-    Scanner inp = new Scanner(System.in);
     QuoridorBoard board = new QuoridorBoard();
 
     public Quoridor() {
@@ -23,20 +22,6 @@ public class Quoridor extends Games<QuoridorPlayer> {
 
         // Setting the size of the board to 9x9
         board.setSize("9x9");
-    }
-
-    /**
-     * Assigning a colour to each player in the games
-     * @return void  This method does not return any value.
-     */
-
-    public void assignColour()
-    {
-        int i = 0;
-        for(QuoridorPlayer player: players) {
-            player.colour = c.colours.get(i);
-            i++;
-        }
     }
 
     /**

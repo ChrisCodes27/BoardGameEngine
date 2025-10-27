@@ -16,7 +16,6 @@ import board.Board;
 import java.util.*;
 
 public class PuzzlePlayer extends Player{
-    Scanner inp = new Scanner(System.in);
 
     /**
      * Constructor for PuzzlePlayer.

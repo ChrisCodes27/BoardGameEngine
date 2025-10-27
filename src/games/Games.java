@@ -10,6 +10,7 @@
 package games;
 
 import gameinterfaces.GameFunctions;
+import player.DotsAndBoxesPlayer;
 import printerrormessage.printErrorMessage;
 import instructions.Instructions;
 import colour.colour;
@@ -22,7 +23,7 @@ public abstract class Games<T extends Player>{
     public printErrorMessage error = new printErrorMessage();
     public colour c = new colour();
     public Instructions instruction = new Instructions();
-    Scanner inp = new Scanner(System.in);
+    public Scanner inp = new Scanner(System.in);
     public boolean isGameDone = false;
     public int indexOfPlayer;
 
@@ -105,6 +106,19 @@ public abstract class Games<T extends Player>{
      */
     public void restore() {
         isGameDone = false;
+    }
+
+    /**
+     * Assigning a colour to each player in the game
+     * @return void function
+     */
+    public void assignColour() {
+        colour c = new colour();
+        int i =0;
+        for(T player: players) {
+            player.colour = c.colours.get(i);
+            i++;
+        }
     }
 
     /**

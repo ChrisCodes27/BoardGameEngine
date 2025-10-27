@@ -11,15 +11,13 @@ package player;
 import java.util.*;
 
 public class DotsAndBoxesPlayer extends Player{
-    Scanner inp = new Scanner(System.in);
     public String choice;
     public int[] position;
     public String edge;
     private int numOfBoxes;
     public boolean isMoveValid;
 
-    public DotsAndBoxesPlayer()
-    {
+    public DotsAndBoxesPlayer() {
         isMoveValid = true;
         numOfBoxes = 0;
     }
@@ -36,7 +34,6 @@ public class DotsAndBoxesPlayer extends Player{
 
     /**
      * to get the input from the user which contains the coordinates of the tile and the edge that they want to claim
-     * @param No parameters
      * @return void function
      */
     @Override
@@ -53,7 +50,6 @@ public class DotsAndBoxesPlayer extends Player{
 
     /**
      * display message if player inputted an invalid move
-     * @param No parameters
      * @return void function
      */
     @Override
