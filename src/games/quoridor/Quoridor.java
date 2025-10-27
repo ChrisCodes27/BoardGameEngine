@@ -380,7 +380,7 @@ public class Quoridor extends Games<QuoridorPlayer> {
 
         // If player has no fences left, will not allow to place a fence
         if(players.get(indexOfPlayer).getFences() == 0) {
-            System.out.println("You have run out of fences! Select a move!");
+            error.noFences();
         }
 
         // Checks if players fence will block off the opponent or itself

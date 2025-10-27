@@ -102,7 +102,7 @@ public class QuoridorPlayer extends Player{
     @Override
     public void invalidMove()
     {
-        System.out.println("That is an invalid choice! Select a valid choice from the menu!");
+        error.invalidMenuInput();
         move();
     }
 }

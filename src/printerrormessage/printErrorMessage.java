@@ -6,8 +6,6 @@
  */
 
 package printerrormessage;
-
-import java.util.*;
 import colour.colour;
 
 public class printErrorMessage{
@@ -21,7 +19,7 @@ public class printErrorMessage{
      */
     public void invalidMenuInput()
     {
-        errorStatement = "Invalid Input! Select a valid item from the menu  ";
+        errorStatement = "Invalid Input! Select a valid item from the menu.  ";
         print(errorStatement);
     }
 
@@ -50,7 +48,7 @@ public class printErrorMessage{
      * @return void function
      */
     public void fencePlacement(){
-        errorStatement = "Invalid Placement! Select a valid fence position!";
+        errorStatement = "Invalid Placement! Select a Valid Fence Position! (Fence already placed or intersects with an existing fence.)";
         print(errorStatement);
     }
 
@@ -59,18 +57,24 @@ public class printErrorMessage{
      * @return void function
      */
     public void invalidPath(){
-        errorStatement = "No Valid Path Available For your Opponent! Illegal move!";
+        errorStatement = "No Valid Path Available For Your Opponent! Illegal Move!";
         print(errorStatement);
     }
 
     public void invalidName()
     {
-        errorStatement = "Name must contain characters!";
+        errorStatement = "Name Must Contain Characters (A - Z)!";
+        print(errorStatement);
+    }
+
+    public void noFences(){
+        errorStatement = "You have run out of fences! Select a move!";
         print(errorStatement);
     }
 
     public void print(String statement)
     {
         System.out.println(c.red + statement + c.endColour);
+        System.out.println();
     }
 }

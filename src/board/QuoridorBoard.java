@@ -93,10 +93,11 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
         // Iterating through an abstract matrix of (2n+1,2m+1). This includes the * and the edges. The *'s start from 0 and are incremented by n+2 while the edges start from 1 and increment by n+2.
         for (i=0; i < 2 * getRows() + 1 ; i++)
         {
-            for (j=0; j<2*getCols()+1;j++)
+            for (j=0; j < 2 * getCols() + 1 ; j++)
             {
                 // To print *
-                if (i%2 == 0 && j%2 == 0) //Every * is located at an even position, so we check for i and j %2 = 0
+                //Every * is located at an even position, so we check for i and j %2 = 0
+                if (i%2 == 0 && j%2 == 0)
                 {
                     System.out.print("  * ");
                 }
@@ -112,14 +113,14 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     {
                         // If an up edge is placed
                         if(row < getRows() && dotsBoard[row][col].up.getValueOnTile().equals(1))
-                            {System.out.print(dotsBoard[row][col].up.edgeColour+ "  —— " +c.endColour);}
+                            {System.out.print(dotsBoard[row][col].up.edgeColour+ "  ##  " +c.endColour);}
 
                         // If a down edge is placed
                         else if(row > 0 && dotsBoard[row-1][col].down.getValueOnTile().equals(1))
-                            {System.out.print(dotsBoard[row-1][col].down.edgeColour+ "  —— " +c.endColour);}
+                            {System.out.print(dotsBoard[row-1][col].down.edgeColour+ "  ##  " +c.endColour);}
 
                         else
-                            {System.out.print("  —— ");}
+                            {System.out.print("  ——  ");}
                     }
                 }
 
@@ -134,14 +135,14 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     {
                         // If a left edge is placed
                         if(col < getCols() && dotsBoard[row][col].left.getValueOnTile().equals(1))
-                            {System.out.print(dotsBoard[row][col].left.edgeColour+ "    | " +c.endColour);}
+                            {System.out.print(dotsBoard[row][col].left.edgeColour+ "  #  " +c.endColour);}
 
                         // If a right edge is placed
                         else if(col > 0 && dotsBoard[row][col-1].right.getValueOnTile().equals(1))
-                            {System.out.print(dotsBoard[row][col-1].right.edgeColour+ "    | " +c.endColour);}
+                            {System.out.print(dotsBoard[row][col-1].right.edgeColour+ "  #  " +c.endColour);}
 
                         else
-                        {System.out.print("   | ");}
+                        {System.out.print("  |  ");}
                     }
                 } 
                 // To print the inititals of the player if all four edges of a tile is 1
@@ -151,16 +152,13 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     row = (i-1)/2;
                     col = (j-1)/2;
 
-                    if (i == 1 && !playerPiecePosition[row][col].s_piece.getValueOnTile().equals("0")) 
-                    //If a player is on the first row and is on the current tile
-                    {System.out.print("  "+ playerPiecePosition[row][col].s_piece.getValueOnTile()+" ");}
-                    else if (!playerPiecePosition[row][col].s_piece.getValueOnTile().equals("0")) 
-                    //if a player is on the current tile
-                    {System.out.print("  "+ playerPiecePosition[row][col].s_piece.getValueOnTile()+" ");}
-                    else if (i==1)
-                    {System.out.print("  "+ dotsBoard[row][col].i_piece.getValueOnTile()+" ");}
-                    else
-                    {System.out.print(" "+ dotsBoard[row][col].i_piece.getValueOnTile()+" ");}
+                    if (!playerPiecePosition[row][col].s_piece.getValueOnTile().equals("0")) {
+                        // Print player piece if it exists on this tile
+                        System.out.printf("  %2s  ", playerPiecePosition[row][col].s_piece.getValueOnTile());
+                    } else {
+                        // Otherwise, print the default board tile value
+                        System.out.printf(" %2s  ", dotsBoard[row][col].i_piece.getValueOnTile());
+                    }
                 }
             }
             System.out.println();
@@ -221,7 +219,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     switch(edge)
                     {
                         case "U":
-                            if(dotsBoard[i1][j1].up.getValueOnTile().equals(i) && dotsBoard[i2][j2].up.getValueOnTile().equals(i)  && i1 - 1 > 0 && i2 - 1 > 0)
+                            if(dotsBoard[i1][j1].up.getValueOnTile().equals(i) && dotsBoard[i2][j2].up.getValueOnTile().equals(i)  && i1 - 1 >= 0 && i2 - 1 >= 0)
                             {
                                 if(num1 + 1 == num2 && dotsBoard[i2][j2].left.getValueOnTile().equals(1) && dotsBoard[i2-1][j2].left.getValueOnTile().equals(1))
                                 {
@@ -291,7 +289,7 @@ public class QuoridorBoard extends DotsAndBoxesBoard{
                     switch(edge)
                     {
                         case "L":
-                            if(dotsBoard[i1][j1].left.getValueOnTile().equals(i) && dotsBoard[i2][j2].left.getValueOnTile().equals(i)  && j1 - 1 > 0 && j2 - 1 > 0){
+                            if(dotsBoard[i1][j1].left.getValueOnTile().equals(i) && dotsBoard[i2][j2].left.getValueOnTile().equals(i)  && j1 - 1 >= 0 && j2 - 1 >= 0){
                                 if(num1 + 9 == num1 + 9 && dotsBoard[i2][j2].up.getValueOnTile().equals(1) && dotsBoard[i2][j2-1].up.getValueOnTile().equals(1))
                                 {
                                     return false;
